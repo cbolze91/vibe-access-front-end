@@ -9,6 +9,7 @@ export const mockEvents = [
     time: "10:00 AM",
     location: "Boston Common",
     category: "Wellness",
+    creator: "Thara",
 
     // Image shown on the event card.
     imageUrl:
@@ -35,6 +36,7 @@ export const mockEvents = [
     time: "9:00 AM",
     location: "Museum of Fine Arts Boston",
     category: "Arts",
+    creator: "Christina",
     imageUrl:
       "https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=1200&q=80",
     description:
@@ -53,6 +55,7 @@ export const mockEvents = [
     time: "7:00 PM",
     location: "Somerville Theatre",
     category: "Entertainment",
+    creator: "Thara",
     imageUrl:
       "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1200&q=80",
     description:
