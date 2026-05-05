@@ -1,16 +1,119 @@
-# React + Vite
+# VibeAccess Front End
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+VibeAccess is a responsive React web app that helps users discover accessible events and experiences.
 
-Currently, two official plugins are available:
+This repository contains the **front-end** code for the VibeAccess MERN stack group project.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Project Overview
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+VibeAccess helps users:
 
-## Expanding the ESLint configuration
+- Browse accessible events
+- View event details
+- Create and edit events
+- RSVP to events
+- View their events and RSVPs
+- Find events with accessibility features such as wheelchair access, captions, low sensory options, and step-free entrances
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The goal is to create a clean, inclusive, and easy-to-use event discovery experience.
+
+---
+
+## Tech Stack
+
+- React
+- Vite
+- JavaScript
+- CSS
+- React Router
+- Git and GitHub
+
+---
+
+## Key Front-End Concepts
+
+This project practices:
+
+- React components
+- Props
+- State
+- Routing
+- Forms
+- Conditional rendering
+- API integration
+- Responsive design
+- Accessibility-focused UI
+
+---
+
+## Planned Pages
+
+- Sign Up / Log In
+- Browse Events
+- Event Details
+- Create Event
+- Edit Event
+- My Events / My RSVPs
+
+---
+
+## How to Run Locally
+
+Clone the repository:
+
+`git clone https://github.com/cbolze91/vibe-access-front-end.git`
+
+Go into the project folder:
+
+`cd vibe-access-front-end`
+
+Install dependencies:
+
+`npm install`
+
+Start the development server:
+
+`npm run dev`
+
+Open the local URL shown in the terminal:
+
+`http://localhost:5173/`
+
+---
+
+## Back-End Repository
+
+The back-end repository will contain the Express, MongoDB, and authentication logic.
+
+Back-end repo:
+
+`https://github.com/cbolze91/vibe-access-back-end`
+
+---
+
+## Project Status
+
+Current status:
+
+- React app created
+- Front-end repo connected to GitHub
+- Initial project setup in progress
+- UI pages and routing coming next
+
+---
+
+## Key Takeaways
+
+- A frontend app controls what users see and interact with.
+- React components help break the UI into reusable pieces.
+- Routing lets users move between pages.
+- Mock data can help build the frontend before the backend is ready.
+- A clear README helps other developers understand and run the project.
+
+---
+
+## Team
+
+Built by Thara Messeroux and Christina Boles for the General Assembly SDE Unit 3 MERN CRUD group project.
