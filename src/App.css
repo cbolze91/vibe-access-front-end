@@ -29,59 +29,48 @@ select {
 button {
   cursor: pointer;
 }
-
 /* ===== Navbar ===== */
-/* Navbar stretches across the full app like the hi-fi. */
 .navbar {
   position: sticky;
   top: 0;
   z-index: 20;
   width: 100%;
   min-height: 88px;
-  padding: 0 48px;
+  padding: 0 56px;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: 260px 1fr 260px;
   align-items: center;
   gap: 2rem;
   border-bottom: 1px solid #e5edf8;
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.97);
   backdrop-filter: blur(20px);
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  color: #07122f;
-  font-size: 1.6rem;
-  font-weight: 900;
-  letter-spacing: -0.04em;
+  width: fit-content;
 }
 
-.brand-mark {
-  display: grid;
-  place-items: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #0047ff 0%, #7c3aed 48%, #17b26a 100%);
-  color: white;
-  font-size: 0.9rem;
-  font-weight: 950;
-  letter-spacing: -0.08em;
+.brand-logo {
+  display: block;
+  width: 188px;
+  height: auto;
+  object-fit: contain;
 }
 
 .navbar__links {
   display: flex;
   justify-content: center;
-  gap: 3rem;
+  align-items: center;
+  gap: 3.25rem;
   color: #172554;
   font-size: 0.98rem;
   font-weight: 750;
 }
 
 .navbar__links a {
-  padding: 0.8rem 0;
+  padding: 2rem 0 1.55rem;
   border-bottom: 3px solid transparent;
 }
 
@@ -95,7 +84,31 @@ button {
 .navbar__actions {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   gap: 0.85rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 92px;
+  padding: 0.95rem 1.25rem;
+  border-radius: 0.85rem;
+  font-weight: 850;
+  text-decoration: none;
+}
+
+.btn-light {
+  border: 1px solid #d8e2f0;
+  background: white;
+  color: #07122f;
+}
+
+.btn-primary {
+  background: #0047ff;
+  color: white;
+  box-shadow: 0 14px 24px rgba(0, 71, 255, 0.18);
 }
 
 .mobile-menu {
@@ -105,88 +118,104 @@ button {
   color: #07122f;
 }
 
+/* Mobile dropdown appears when the hamburger menu is open. */
+.mobile-dropdown {
+  display: none;
+}
+
 /* Mobile navbar */
 @media (max-width: 900px) {
   .navbar {
-    width: 100%;
     min-height: 72px;
-    padding: 0 16px;
-    grid-template-columns: auto auto;
+    padding: 0 24px;
+    grid-template-columns: 1fr auto;
   }
 
-  .page-shell {
-    width: 100%;
-    max-width: 430px;
-    padding: 1rem 16px 6.5rem;
+  .brand-logo {
+    width: 164px;
   }
 
-  .browse-hero {
-    grid-template-columns: 1fr;
-    padding: 1.6rem 1rem;
-    text-align: center;
+  .navbar__links,
+  .navbar__actions {
+    display: none;
+  }
+
+  .mobile-menu {
+    display: grid;
+    place-items: center;
   }
 }
-
 /*===== Global Styles ===== */
 
+/* Main content uses the full screen with safe side spacing. */
 .page-shell {
-  width: min(1360px, calc(100% - 3rem));
-  margin: 0 auto;
-  padding: 2rem 0 6rem;
+  width: 100%;
+  padding: 1rem 16px 6rem;
 }
 
 /* Hero introduces the main event discovery experience. */
 /* Hero fills the desktop layout more like the hi-fi. */
+/* ===== Browse hero ===== */
+/* Hero is the top discovery section under the navbar. */
 .browse-hero {
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
+  grid-template-columns: 1.08fr 0.92fr;
   align-items: center;
-  gap: 2.5rem;
+  gap: 2rem;
   width: 100%;
-  padding: 3.5rem 3rem 2rem;
+  padding: 3.2rem 3rem 1.6rem;
   border: 1px solid #dbe8fb;
-  border-radius: 2rem;
+  border-radius: 1.75rem;
   background:
-    linear-gradient(135deg, rgba(240, 247, 255, 0.98), rgba(255, 255, 255, 0.94)),
+    linear-gradient(135deg, rgba(239, 247, 255, 0.96), rgba(255, 255, 255, 0.96)),
     radial-gradient(circle at top right, rgba(219, 234, 254, 0.95), transparent 22rem);
-  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.07);
+  box-shadow: 0 20px 56px rgba(15, 23, 42, 0.06);
 }
 
+/* Hero text matches the hi-fi: big, left-aligned, but not oversized. */
 .hero-text h1 {
   max-width: 720px;
   margin: 0;
   color: #061033;
-  font-size: clamp(3rem, 5vw, 4.8rem);
-  line-height: 0.98;
+  font-size: clamp(3rem, 4.2vw, 4.5rem);
+  line-height: 1.02;
   letter-spacing: -0.07em;
+  text-align: left;
 }
 
 .hero-text p {
-  margin: 1.25rem 0 0;
+  margin: 1rem 0 0;
   color: #334155;
-  font-size: 1.35rem;
-  line-height: 1.5;
+  font-size: 1.25rem;
+  line-height: 1.35;
+  text-align: left;
 }
 
+/* Search area sits on the right side on desktop. */
+.hero-search {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Search bar looks like the hi-fi input + blue button. */
 .search-bar {
-  align-self: center;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 0.85rem;
-  min-width: 0;
-  padding: 0.4rem;
-  border: 1px solid #d8e2f0;
+  width: min(520px, 100%);
+  min-height: 64px;
+  padding: 0.45rem;
+  border: 1px solid #cfddf0;
   border-radius: 1rem;
   background: white;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.06);
 }
 
 .search-bar svg {
-  margin-left: 0.7rem;
+  margin-left: 1rem;
   color: #475569;
 }
 
-/* Search input stays clean and readable. */
 .search-bar input {
   min-width: 0;
   width: 100%;
@@ -194,6 +223,7 @@ button {
   outline: 0;
   background: transparent;
   color: #07122f;
+  font-size: 1rem;
   font-weight: 500;
 }
 
@@ -202,40 +232,34 @@ button {
   opacity: 1;
 }
 
-.search-bar input::selection {
-  background: #dbeafe;
-  color: #07122f;
-}
-
-/* Search button stays bright blue */
 .search-bar button {
   border: 0;
   border-radius: 0.85rem;
-  padding: 1rem 1.8rem;
+  padding: 1rem 1.6rem;
   background: #0047ff;
   color: white;
   font-weight: 850;
   box-shadow: 0 14px 24px rgba(0, 71, 255, 0.18);
 }
 
-/* Accessibility filters are the product's main value, so they get clear cards. */
+/* Accessibility filters show the product value quickly. */
 .accessibility-grid {
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 1rem;
-  margin-top: 1.5rem;
+  margin-top: 1.75rem;
 }
 
 .accessibility-tile {
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
-  gap: 0.85rem;
-  min-height: 78px;
+  gap: 0.8rem;
+  min-height: 74px;
   padding: 1rem;
   border: 1px solid #dce7f5;
-  border-radius: 1rem;
+  border-radius: 0.85rem;
   background: rgba(255, 255, 255, 0.96);
   color: #172554;
   text-align: left;
@@ -244,8 +268,28 @@ button {
   box-shadow: 0 12px 24px rgba(15, 23, 42, 0.04);
 }
 
-.accessibility-tile svg,
-.icon-row svg {
+.accessibility-tile svg {
+  color: #0047ff;
+}
+
+/* Small color variation makes icons feel closer to the hi-fi. */
+.accessibility-tile:nth-child(2) svg {
+  color: #7c3aed;
+}
+
+.accessibility-tile:nth-child(3) svg {
+  color: #0f766e;
+}
+
+.accessibility-tile:nth-child(4) svg {
+  color: #5b21b6;
+}
+
+.accessibility-tile:nth-child(5) svg {
+  color: #0f766e;
+}
+
+.accessibility-tile:nth-child(6) svg {
   color: #0047ff;
 }
 
@@ -495,60 +539,92 @@ button {
     place-items: center;
   }
 
-  /* Main content uses the full desktop screen with safe side padding. */
+  /* Main content uses almost the full screen, like the hi-fi. */
   .page-shell {
     width: 100%;
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 2rem 48px 6rem;
+    max-width: none;
+    margin: 0;
+    padding: 2rem 48px 4rem;
   }
 
-  .browse-hero {
-    grid-template-columns: 1fr;
-    gap: 1.2rem;
-    margin: 0 1rem;
-    padding: 1.6rem 1rem;
-    border-radius: 1.25rem;
-    text-align: center;
-  }
+  /* Mobile hero matches the compact hi-fi phone layout. */
+@media (max-width: 900px) {
 
-  .hero-text h1 {
-    font-size: 2rem;
-    line-height: 1.05;
-    letter-spacing: -0.05em;
-  }
+  /* Mobile hero matches the compact hi-fi phone layout. */
+    @media (max-width: 900px) {
+      .browse-hero {
+        display: block;
+        padding: 1.5rem 1rem 0.9rem;
+        border-radius: 1.35rem;
+        text-align: center;
+        overflow: hidden;
+      }
+  
+      .hero-text h1 {
+        max-width: 100%;
+        font-size: 1.7rem;
+        line-height: 1.1;
+        letter-spacing: -0.055em;
+        text-align: center;
+      }
+  
+      .hero-text p {
+        margin-top: 0.75rem;
+        font-size: 0.98rem;
+        line-height: 1.4;
+        text-align: center;
+      }
+  
+      .hero-search {
+        margin-top: 1.25rem;
+        justify-content: center;
+      }
+  
+      .search-bar {
+        width: 100%;
+        min-height: auto;
+        grid-template-columns: auto 1fr;
+        padding: 0.6rem;
+        border-radius: 0.95rem;
+      }
+  
+      .search-bar button {
+        grid-column: 1 / -1;
+        width: 100%;
+        margin-top: 0.65rem;
+        padding: 0.9rem 1rem;
+      }
+  
+      .accessibility-grid {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: 1rem;
+        overflow-x: auto;
+        padding-bottom: 0.7rem;
+        scroll-snap-type: x mandatory;
+      }
+  
+      .accessibility-tile {
+        min-width: 92px;
+        min-height: 104px;
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 0.5rem;
+        padding: 0.85rem 0.65rem;
+        text-align: center;
+        font-size: 0.72rem;
+        scroll-snap-align: start;
+      }
+  
+      .accessibility-tile svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  
+}
 
-  .hero-text p {
-    font-size: 1rem;
-  }
-
-  .search-bar {
-    grid-template-columns: auto 1fr;
-    text-align: left;
-  }
-
-  .search-bar button {
-    grid-column: 1 / -1;
-    width: 100%;
-  }
-
-  .accessibility-grid {
-    display: flex;
-    gap: 0.7rem;
-    overflow-x: auto;
-    padding-bottom: 0.25rem;
-    scroll-snap-type: x mandatory;
-  }
-
-  .accessibility-tile {
-    min-width: 92px;
-    min-height: 82px;
-    grid-template-columns: 1fr;
-    justify-items: center;
-    text-align: center;
-    font-size: 0.72rem;
-    scroll-snap-align: start;
-  }
+ 
 
   .section-block {
     margin: 1.8rem 1rem 0;
