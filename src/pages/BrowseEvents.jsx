@@ -33,7 +33,8 @@ function FeatureIcon({ feature }) {
 
   const Icon = iconMap[feature] || Accessibility;
 
-  return <Icon size={18} aria-hidden="true" />;
+  // Keeps feature icons consistent with the hi-fi.
+  return <Icon size={20} strokeWidth={2.25} aria-hidden="true" />;
 }
 
 function BrowseEvents() {
@@ -163,7 +164,7 @@ function BrowseEvents() {
               </div>
 
               <div className="icon-row event-row__icons">
-                {event.accessibilityFeatures.slice(0, 4).map((feature) => (
+                {event.accessibilityFeatures.slice(0, 5).map((feature) => (
                   <span title={feature} key={feature}>
                     <FeatureIcon feature={feature} />
                   </span>

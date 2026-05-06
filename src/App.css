@@ -29,6 +29,7 @@ select {
 button {
   cursor: pointer;
 }
+
 /* ===== Navbar ===== */
 .navbar {
   position: sticky;
@@ -123,6 +124,105 @@ button {
   display: none;
 }
 
+/* ===== Desktop card alignment polish ===== */
+/* Keeps featured event card content aligned like the hi-fi. */
+.event-card {
+  text-align: left;
+}
+
+.event-card__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* Event titles should start from the left, not center. */
+.event-card h3,
+.event-row h3 {
+  width: 100%;
+  text-align: left;
+}
+
+/* Date and location rows stay left-aligned and easy to scan. */
+.event-meta,
+.event-row p {
+  width: 100%;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+/* Accessibility icons should sit in one left-aligned row. */
+.icon-row {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+/* Featured card link should look like the hi-fi text link, not centered gray text. */
+.details-link {
+  justify-content: flex-start;
+  padding-left: 0;
+  color: #0047ff;
+  background: transparent;
+}
+
+/* All Events details should stay left-aligned inside each row. */
+.event-row__details {
+  text-align: left;
+}
+
+/* Keep all event row buttons visually consistent. */
+.row-link {
+  color: #0047ff;
+  font-weight: 850;
+}
+
+.row-link:hover,
+.details-link:hover {
+  color: #0037cc;
+}
+
+/* ===== Event feature icon polish ===== */
+/* Makes event icons match the hi-fi color rhythm. */
+.icon-row {
+  gap: 0.85rem;
+}
+
+.icon-row span {
+  color: #64748b;
+}
+
+/* Wheelchair icon */
+.icon-row span[title="Wheelchair accessible"] {
+  color: #2563eb;
+}
+
+/* ASL icon */
+.icon-row span[title="ASL provided"] {
+  color: #7c3aed;
+}
+
+/* Low sensory icon */
+.icon-row span[title="Low sensory"] {
+  color: #0f766e;
+}
+
+/* Captions icon */
+.icon-row span[title="Captions provided"] {
+  color: #334155;
+}
+
+/* Transit icon */
+.icon-row span[title="Public transit nearby"] {
+  color: #334155;
+}
+
+/* Step-free icon */
+.icon-row span[title="Step-free access"],
+.icon-row span[title="Step-free entrance"] {
+  color: #0f766e;
+}
+
 /* Mobile navbar */
 @media (max-width: 900px) {
   .navbar {
@@ -145,6 +245,7 @@ button {
     place-items: center;
   }
 }
+
 /*===== Global Styles ===== */
 
 /* Main content uses the full screen with safe side spacing. */
@@ -548,9 +649,9 @@ button {
   }
 
   /* Mobile hero matches the compact hi-fi phone layout. */
-@media (max-width: 900px) {
+  @media (max-width: 900px) {
 
-  /* Mobile hero matches the compact hi-fi phone layout. */
+    /* Mobile hero matches the compact hi-fi phone layout. */
     @media (max-width: 900px) {
       .browse-hero {
         display: block;
@@ -559,7 +660,7 @@ button {
         text-align: center;
         overflow: hidden;
       }
-  
+
       .hero-text h1 {
         max-width: 100%;
         font-size: 1.7rem;
@@ -567,19 +668,19 @@ button {
         letter-spacing: -0.055em;
         text-align: center;
       }
-  
+
       .hero-text p {
         margin-top: 0.75rem;
         font-size: 0.98rem;
         line-height: 1.4;
         text-align: center;
       }
-  
+
       .hero-search {
         margin-top: 1.25rem;
         justify-content: center;
       }
-  
+
       .search-bar {
         width: 100%;
         min-height: auto;
@@ -587,14 +688,14 @@ button {
         padding: 0.6rem;
         border-radius: 0.95rem;
       }
-  
+
       .search-bar button {
         grid-column: 1 / -1;
         width: 100%;
         margin-top: 0.65rem;
         padding: 0.9rem 1rem;
       }
-  
+
       .accessibility-grid {
         display: flex;
         gap: 0.75rem;
@@ -603,7 +704,7 @@ button {
         padding-bottom: 0.7rem;
         scroll-snap-type: x mandatory;
       }
-  
+
       .accessibility-tile {
         min-width: 92px;
         min-height: 104px;
@@ -615,16 +716,16 @@ button {
         font-size: 0.72rem;
         scroll-snap-align: start;
       }
-  
+
       .accessibility-tile svg {
         width: 24px;
         height: 24px;
       }
     }
-  
-}
 
- 
+  }
+
+
 
   .section-block {
     margin: 1.8rem 1rem 0;
