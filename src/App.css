@@ -1,4 +1,5 @@
-/* The root lets the app use the full browser width. */
+/* ===== App Foundation ===== */
+/* The app uses the full browser width. */
 #root {
   width: 100%;
   min-height: 100vh;
@@ -11,8 +12,8 @@
 body {
   margin: 0;
   background:
-    radial-gradient(circle at top left, rgba(219, 234, 254, 0.8), transparent 30rem),
-    linear-gradient(180deg, #ffffff 0%, #f8fbff 45%, #ffffff 100%);
+    radial-gradient(circle at top left, rgba(219, 234, 254, 0.65), transparent 30rem),
+    linear-gradient(180deg, #ffffff 0%, #f8fbff 48%, #ffffff 100%);
 }
 
 a {
@@ -31,6 +32,7 @@ button {
 }
 
 /* ===== Navbar ===== */
+/* Sticky header keeps navigation visible while scrolling. */
 .navbar {
   position: sticky;
   top: 0;
@@ -97,7 +99,6 @@ button {
   padding: 0.95rem 1.25rem;
   border-radius: 0.85rem;
   font-weight: 850;
-  text-decoration: none;
 }
 
 .btn-light {
@@ -112,152 +113,20 @@ button {
   box-shadow: 0 14px 24px rgba(0, 71, 255, 0.18);
 }
 
-.mobile-menu {
-  display: none;
-  border: 0;
-  background: transparent;
-  color: #07122f;
-}
-
-/* Mobile dropdown appears when the hamburger menu is open. */
+.mobile-menu,
 .mobile-dropdown {
   display: none;
 }
 
-/* ===== Desktop card alignment polish ===== */
-/* Keeps featured event card content aligned like the hi-fi. */
-.event-card {
-  text-align: left;
-}
-
-.event-card__content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-}
-
-/* Event titles should start from the left, not center. */
-.event-card h3,
-.event-row h3 {
-  width: 100%;
-  text-align: left;
-}
-
-/* Date and location rows stay left-aligned and easy to scan. */
-.event-meta,
-.event-row p {
-  width: 100%;
-  justify-content: flex-start;
-  text-align: left;
-}
-
-/* Accessibility icons should sit in one left-aligned row. */
-.icon-row {
-  width: 100%;
-  justify-content: flex-start;
-}
-
-/* Featured card link should look like the hi-fi text link, not centered gray text. */
-.details-link {
-  justify-content: flex-start;
-  padding-left: 0;
-  color: #0047ff;
-  background: transparent;
-}
-
-/* All Events details should stay left-aligned inside each row. */
-.event-row__details {
-  text-align: left;
-}
-
-/* Keep all event row buttons visually consistent. */
-.row-link {
-  color: #0047ff;
-  font-weight: 850;
-}
-
-.row-link:hover,
-.details-link:hover {
-  color: #0037cc;
-}
-
-/* ===== Event feature icon polish ===== */
-/* Makes event icons match the hi-fi color rhythm. */
-.icon-row {
-  gap: 0.85rem;
-}
-
-.icon-row span {
-  color: #64748b;
-}
-
-/* Wheelchair icon */
-.icon-row span[title="Wheelchair accessible"] {
-  color: #2563eb;
-}
-
-/* ASL icon */
-.icon-row span[title="ASL provided"] {
-  color: #7c3aed;
-}
-
-/* Low sensory icon */
-.icon-row span[title="Low sensory"] {
-  color: #0f766e;
-}
-
-/* Captions icon */
-.icon-row span[title="Captions provided"] {
-  color: #334155;
-}
-
-/* Transit icon */
-.icon-row span[title="Public transit nearby"] {
-  color: #334155;
-}
-
-/* Step-free icon */
-.icon-row span[title="Step-free access"],
-.icon-row span[title="Step-free entrance"] {
-  color: #0f766e;
-}
-
-/* Mobile navbar */
-@media (max-width: 900px) {
-  .navbar {
-    min-height: 72px;
-    padding: 0 24px;
-    grid-template-columns: 1fr auto;
-  }
-
-  .brand-logo {
-    width: 164px;
-  }
-
-  .navbar__links,
-  .navbar__actions {
-    display: none;
-  }
-
-  .mobile-menu {
-    display: grid;
-    place-items: center;
-  }
-}
-
-/*===== Global Styles ===== */
-
-/* Main content uses the full screen with safe side spacing. */
+/* ===== Page Layout ===== */
+/* Small side padding keeps content full width but not touching edges. */
 .page-shell {
   width: 100%;
   padding: 1rem 16px 6rem;
 }
 
-/* Hero introduces the main event discovery experience. */
-/* Hero fills the desktop layout more like the hi-fi. */
-/* ===== Browse hero ===== */
-/* Hero is the top discovery section under the navbar. */
+/* ===== Hero ===== */
+/* Main search area for discovering events. */
 .browse-hero {
   display: grid;
   grid-template-columns: 1.08fr 0.92fr;
@@ -273,14 +142,13 @@ button {
   box-shadow: 0 20px 56px rgba(15, 23, 42, 0.06);
 }
 
-/* Hero text matches the hi-fi: big, left-aligned, but not oversized. */
 .hero-text h1 {
-  max-width: 720px;
+  max-width: 760px;
   margin: 0;
   color: #061033;
-  font-size: clamp(3rem, 4.2vw, 4.5rem);
+  font-size: clamp(3rem, 4.2vw, 4.65rem);
   line-height: 1.02;
-  letter-spacing: -0.07em;
+  letter-spacing: -0.075em;
   text-align: left;
 }
 
@@ -292,13 +160,11 @@ button {
   text-align: left;
 }
 
-/* Search area sits on the right side on desktop. */
 .hero-search {
   display: flex;
   justify-content: flex-end;
 }
 
-/* Search bar looks like the hi-fi input + blue button. */
 .search-bar {
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -343,7 +209,8 @@ button {
   box-shadow: 0 14px 24px rgba(0, 71, 255, 0.18);
 }
 
-/* Accessibility filters show the product value quickly. */
+/* ===== Accessibility Filters ===== */
+/* Quick filters make the product value clear. */
 .accessibility-grid {
   grid-column: 1 / -1;
   display: grid;
@@ -373,12 +240,12 @@ button {
   color: #0047ff;
 }
 
-/* Small color variation makes icons feel closer to the hi-fi. */
 .accessibility-tile:nth-child(2) svg {
   color: #7c3aed;
 }
 
-.accessibility-tile:nth-child(3) svg {
+.accessibility-tile:nth-child(3) svg,
+.accessibility-tile:nth-child(5) svg {
   color: #0f766e;
 }
 
@@ -386,14 +253,7 @@ button {
   color: #5b21b6;
 }
 
-.accessibility-tile:nth-child(5) svg {
-  color: #0f766e;
-}
-
-.accessibility-tile:nth-child(6) svg {
-  color: #0047ff;
-}
-
+/* ===== Section Headers ===== */
 .section-block {
   margin-top: 2rem;
 }
@@ -418,30 +278,86 @@ button {
   font-weight: 850;
 }
 
-.sort-control {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.8rem;
-  color: #475569;
-  font-weight: 700;
-}
-
-.sort-control select {
-  min-width: 150px;
-  border: 1px solid #d8e2f0;
-  border-radius: 0.8rem;
-  padding: 0.75rem 1rem;
-  background: white;
-  color: #172554;
-  font-weight: 700;
-}
-
+/* ===== Featured Events ===== */
+/* Featured events show 7 equal cards across the full row. */
 .featured-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.4rem;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 1rem;
+  width: 100%;
 }
 
+/* Only the first 7 featured cards show on desktop and mobile. */
+.featured-grid .event-card:nth-of-type(n + 8),
+.featured-grid .see-all-card {
+  display: none;
+}
+
+/* Featured cards are compact, clean, and equal-sized. */
+.featured-grid .event-card {
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+
+/* Featured images stay equal and square-like. */
+.featured-grid .event-card__image-wrap {
+  aspect-ratio: 1 / 0.78;
+  height: auto;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.featured-grid .event-card__content {
+  padding: 0.7rem 0 0;
+}
+
+.featured-grid .event-card h3 {
+  margin: 0 0 0.35rem;
+  color: #07122f;
+  font-size: 0.9rem;
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+}
+
+.featured-grid .event-meta {
+  margin: 0.15rem 0;
+  color: #475569;
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+.featured-grid .icon-row {
+  gap: 0.4rem;
+  margin: 0.5rem 0 0.5rem;
+}
+
+.featured-grid .icon-row svg {
+  width: 15px;
+  height: 15px;
+}
+
+.featured-grid .details-link {
+  padding: 0;
+  color: #0047ff;
+  font-size: 0.82rem;
+  font-weight: 850;
+}
+
+.featured-grid .price-pill {
+  font-size: 0.68rem;
+  padding: 0.25rem 0.48rem;
+}
+
+.featured-grid .heart-button {
+  width: 30px;
+  height: 30px;
+}
+
+/* ===== Shared Event Card Styles ===== */
 .event-card,
 .event-row {
   border: 1px solid #dfe7f2;
@@ -449,6 +365,7 @@ button {
   background: rgba(255, 255, 255, 0.98);
   box-shadow: 0 18px 45px rgba(15, 23, 42, 0.055);
   overflow: hidden;
+  text-align: left;
 }
 
 .event-card__image-wrap {
@@ -465,6 +382,74 @@ button {
   object-fit: cover;
 }
 
+.event-card__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.25rem;
+  text-align: left;
+}
+
+.event-card h3,
+.event-row h3 {
+  width: 100%;
+  margin: 0 0 0.8rem;
+  color: #07122f;
+  font-size: 1.25rem;
+  letter-spacing: -0.03em;
+  text-align: left;
+}
+
+.event-meta,
+.event-row p {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.45rem;
+  width: 100%;
+  margin: 0.35rem 0;
+  color: #475569;
+  line-height: 1.5;
+  text-align: left;
+}
+
+/* ===== Feature Icons ===== */
+.icon-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  width: 100%;
+  margin: 1rem 0 1.15rem;
+}
+
+.icon-row span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+}
+
+.icon-row span[title="Wheelchair accessible"] {
+  color: #2563eb;
+}
+
+.icon-row span[title="ASL provided"] {
+  color: #7c3aed;
+}
+
+.icon-row span[title="Low sensory"],
+.icon-row span[title="Step-free access"],
+.icon-row span[title="Step-free entrance"] {
+  color: #0f766e;
+}
+
+.icon-row span[title="Captions provided"],
+.icon-row span[title="Public transit nearby"] {
+  color: #334155;
+}
+
+/* ===== Price + Action Styles ===== */
 .price-pill,
 .row-price {
   display: inline-flex;
@@ -500,41 +485,6 @@ button {
   backdrop-filter: blur(10px);
 }
 
-.event-card__content {
-  padding: 1.25rem;
-}
-
-.event-card h3,
-.event-row h3 {
-  margin: 0 0 0.8rem;
-  color: #07122f;
-  font-size: 1.25rem;
-  letter-spacing: -0.03em;
-}
-
-.event-meta,
-.event-row p {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  margin: 0.35rem 0;
-  color: #475569;
-  line-height: 1.5;
-}
-
-.icon-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin: 1rem 0 1.15rem;
-}
-
-.icon-row span {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .details-link,
 .row-link,
 .view-more {
@@ -544,6 +494,36 @@ button {
   border-radius: 0.75rem;
   padding: 0.78rem 1rem;
   font-weight: 850;
+}
+
+.details-link,
+.row-link {
+  color: #0047ff;
+}
+
+.details-link:hover,
+.row-link:hover {
+  color: #0037cc;
+}
+
+/* ===== All Events ===== */
+/* Rows stay wide and easy to compare. */
+.sort-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: #475569;
+  font-weight: 700;
+}
+
+.sort-control select {
+  min-width: 150px;
+  border: 1px solid #d8e2f0;
+  border-radius: 0.8rem;
+  padding: 0.75rem 1rem;
+  background: white;
+  color: #172554;
+  font-weight: 700;
 }
 
 .event-list {
@@ -576,6 +556,10 @@ button {
   border-radius: 0.7rem;
 }
 
+.event-row__details {
+  text-align: left;
+}
+
 .event-row__icons {
   margin: 0;
 }
@@ -587,7 +571,6 @@ button {
 .row-link {
   border: 1px solid #cfe0ff;
   background: white;
-  color: #0047ff;
   box-shadow: none;
   white-space: nowrap;
 }
@@ -613,21 +596,52 @@ button {
   clip: rect(0, 0, 0, 0);
 }
 
+/* ===== Tablet ===== */
+@media (max-width: 1200px) {
+  .navbar {
+    grid-template-columns: 220px 1fr 220px;
+    padding: 0 32px;
+  }
+
+  .brand-logo {
+    width: 170px;
+  }
+
+  .navbar__links {
+    gap: 2rem;
+  }
+
+  .browse-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-search {
+    justify-content: flex-start;
+  }
+
+  .accessibility-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .featured-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .event-row {
+    grid-template-columns: 150px 1.3fr 0.8fr auto auto;
+  }
+}
+
+/* ===== Mobile ===== */
 @media (max-width: 900px) {
   .navbar {
+    min-height: 72px;
+    padding: 0 24px;
     grid-template-columns: 1fr auto;
-    padding: 1rem;
   }
 
-  .brand {
-    font-size: 1.15rem;
-  }
-
-  .brand-mark {
-    width: 34px;
-    height: 34px;
-    border-radius: 10px;
-    font-size: 0.78rem;
+  .brand-logo {
+    width: 164px;
   }
 
   .navbar__links,
@@ -640,95 +654,121 @@ button {
     place-items: center;
   }
 
-  /* Main content uses almost the full screen, like the hi-fi. */
+  .mobile-dropdown {
+    position: absolute;
+    top: 72px;
+    right: 16px;
+    left: 16px;
+    z-index: 50;
+    display: grid;
+    gap: 0.25rem;
+    padding: 0.75rem;
+    border: 1px solid #dbe8fb;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+  }
+
+  .mobile-dropdown a {
+    padding: 0.9rem 1rem;
+    border-radius: 0.75rem;
+    color: #07122f;
+    font-weight: 800;
+  }
+
+  .mobile-dropdown a:hover,
+  .mobile-dropdown a:focus,
+  .mobile-dropdown .active-link {
+    background: #eff6ff;
+    color: #0047ff;
+  }
+
+  .mobile-dropdown__primary {
+    background: #0047ff;
+    color: white;
+    text-align: center;
+  }
+
   .page-shell {
+    padding: 1rem 14px 6rem;
+  }
+
+  .browse-hero {
+    display: block;
+    padding: 1.45rem 1rem 0.95rem;
+    border-radius: 1.35rem;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-text h1 {
+    max-width: 100%;
+    font-size: 1.7rem;
+    line-height: 1.1;
+    letter-spacing: -0.055em;
+    text-align: center;
+  }
+
+  .hero-text p {
+    margin-top: 0.75rem;
+    font-size: 0.98rem;
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  .hero-search {
+    margin-top: 1.25rem;
+    justify-content: center;
+  }
+
+  .search-bar {
     width: 100%;
-    max-width: none;
-    margin: 0;
-    padding: 2rem 48px 4rem;
+    min-height: auto;
+    grid-template-columns: auto 1fr;
+    padding: 0.6rem;
+    border-radius: 0.95rem;
   }
 
-  /* Mobile hero matches the compact hi-fi phone layout. */
-  @media (max-width: 900px) {
-
-    /* Mobile hero matches the compact hi-fi phone layout. */
-    @media (max-width: 900px) {
-      .browse-hero {
-        display: block;
-        padding: 1.5rem 1rem 0.9rem;
-        border-radius: 1.35rem;
-        text-align: center;
-        overflow: hidden;
-      }
-
-      .hero-text h1 {
-        max-width: 100%;
-        font-size: 1.7rem;
-        line-height: 1.1;
-        letter-spacing: -0.055em;
-        text-align: center;
-      }
-
-      .hero-text p {
-        margin-top: 0.75rem;
-        font-size: 0.98rem;
-        line-height: 1.4;
-        text-align: center;
-      }
-
-      .hero-search {
-        margin-top: 1.25rem;
-        justify-content: center;
-      }
-
-      .search-bar {
-        width: 100%;
-        min-height: auto;
-        grid-template-columns: auto 1fr;
-        padding: 0.6rem;
-        border-radius: 0.95rem;
-      }
-
-      .search-bar button {
-        grid-column: 1 / -1;
-        width: 100%;
-        margin-top: 0.65rem;
-        padding: 0.9rem 1rem;
-      }
-
-      .accessibility-grid {
-        display: flex;
-        gap: 0.75rem;
-        margin-top: 1rem;
-        overflow-x: auto;
-        padding-bottom: 0.7rem;
-        scroll-snap-type: x mandatory;
-      }
-
-      .accessibility-tile {
-        min-width: 92px;
-        min-height: 104px;
-        grid-template-columns: 1fr;
-        justify-items: center;
-        gap: 0.5rem;
-        padding: 0.85rem 0.65rem;
-        text-align: center;
-        font-size: 0.72rem;
-        scroll-snap-align: start;
-      }
-
-      .accessibility-tile svg {
-        width: 24px;
-        height: 24px;
-      }
-    }
-
+  .search-bar button {
+    grid-column: 1 / -1;
+    width: 100%;
+    margin-top: 0.65rem;
+    padding: 0.9rem 1rem;
   }
 
+  .accessibility-grid {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    overflow-x: auto;
+    padding-bottom: 0.7rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
 
+  .accessibility-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .accessibility-tile {
+    min-width: 92px;
+    min-height: 104px;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 0.65rem;
+    text-align: center;
+    font-size: 0.72rem;
+    scroll-snap-align: start;
+  }
+
+  .accessibility-tile svg {
+    width: 24px;
+    height: 24px;
+  }
 
   .section-block {
-    margin: 1.8rem 1rem 0;
+    margin-top: 1.8rem;
   }
 
   .section-heading h2 {
@@ -746,16 +786,12 @@ button {
   }
 
   .featured-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
   }
 
-  .event-card__image-wrap {
-    height: 190px;
-  }
-
-  .event-card__content {
-    padding: 1rem;
+  .featured-grid .event-card__image-wrap {
+    aspect-ratio: 1 / 0.85;
   }
 
   .event-list {

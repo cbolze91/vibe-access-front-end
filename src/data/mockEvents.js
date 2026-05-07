@@ -1,3 +1,4 @@
+// src/data/mockEvents.js
 // Temporary event data used while the backend is still being built.
 // Later, these events will come from MongoDB through the API.
 export const mockEvents = [
@@ -122,6 +123,71 @@ export const mockEvents = [
       "Wheelchair accessible",
       "Low sensory",
       "Captions provided",
+      "Public transit nearby",
+    ],
+    rsvpEnabled: true,
+  },
+
+  {
+    id: 7,
+    title: "Accessible Garden Walk",
+    date: "Mon, May 27",
+    time: "10:30 AM",
+    location: "Zilker Botanical Garden, Austin, TX",
+    category: "Outdoors",
+    price: "FREE",
+    creator: "Austin Garden Collective",
+    imageUrl:
+      "https://images.pexels.com/photos/414160/pexels-photo-414160.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    description:
+      "A peaceful garden walk with step-free paths, wheelchair access, and quiet rest areas.",
+    accessibilityFeatures: [
+      "Wheelchair accessible",
+      "Low sensory",
+      "Step-free access",
+      "Public transit nearby",
+    ],
+    rsvpEnabled: true,
+  },
+  {
+    id: 8,
+    title: "Sensory-Friendly Art Studio",
+    date: "Tue, May 28",
+    time: "1:00 PM",
+    location: "Creative Space Austin, Austin, TX",
+    category: "Arts",
+    price: "$12",
+    creator: "Creative Space Austin",
+    imageUrl:
+      "https://images.pexels.com/photos/1646953/pexels-photo-1646953.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    description:
+      "A calm art-making session with low lighting, quiet space, captions, and accessible tables.",
+    accessibilityFeatures: [
+      "Wheelchair accessible",
+      "Low sensory",
+      "Captions provided",
+      "Step-free access",
+    ],
+    rsvpEnabled: true,
+  },
+  {
+    id: 9,
+    title: "Inclusive Dance Social",
+    date: "Wed, May 29",
+    time: "6:30 PM",
+    location: "Community Dance Hall, Austin, TX",
+    category: "Dance",
+    price: "$8",
+    creator: "Inclusive Dance Austin",
+    imageUrl:
+      "https://images.pexels.com/photos/358010/pexels-photo-358010.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    description:
+      "A beginner-friendly dance night with ASL support, captions, accessible entry, and seating.",
+    accessibilityFeatures: [
+      "Wheelchair accessible",
+      "ASL provided",
+      "Captions provided",
+      "Step-free access",
       "Public transit nearby",
     ],
     rsvpEnabled: true,

@@ -9,6 +9,8 @@ import {
   Accessibility,
   Languages,
 } from "lucide-react";
+import { useState } from "react";
+import { Link } from "react-router";
 import { mockEvents } from "../data/mockEvents";
 
 const accessibilityFilters = [
@@ -38,8 +40,11 @@ function FeatureIcon({ feature }) {
 }
 
 function BrowseEvents() {
-  const featuredEvents = mockEvents.slice(0, 3);
-  const allEvents = mockEvents.slice(3);
+  // Featured Events shows a full browse row like Airbnb.
+  const featuredEvents = mockEvents.slice(0, 9);
+
+  // All Events stays focused and unchanged visually.
+  const allEvents = mockEvents.slice(3, 6);
 
   return (
     <main className="page-shell">
@@ -128,6 +133,13 @@ function BrowseEvents() {
               </div>
             </article>
           ))}
+
+          {featuredEvents.map((event) => (
+            <article className="event-card" key={event.id}>
+              ...
+            </article>
+          ))}
+
         </div>
       </section>
 
