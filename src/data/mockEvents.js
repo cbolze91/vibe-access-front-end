@@ -12,7 +12,7 @@ export const mockEvents = [
     price: "FREE",
     creator: "Austin Parks Collective",
     imageUrl:
-      "https://images.unsplash.com/photo-1505686994434-e3cc5abf1330?auto=format&fit=crop&w=1200&q=80",
+      "https://images.pexels.com/photos/7900688/pexels-photo-7900688.jpeg",
     description:
       "A relaxed outdoor movie night with accessible seating, captions, and public transit nearby.",
     accessibilityFeatures: [
@@ -34,7 +34,7 @@ export const mockEvents = [
     price: "$15",
     creator: "The Laugh Hub",
     imageUrl:
-      "https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=1200&q=80",
+      "https://images.pexels.com/photos/9044287/pexels-photo-9044287.jpeg",
     description:
       "A comedy night with ASL interpretation, captions, and inclusive seating options.",
     accessibilityFeatures: [
@@ -55,7 +55,7 @@ export const mockEvents = [
     price: "$25",
     creator: "Mindful Makers",
     imageUrl:
-      "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=1200&q=80",
+      "https://images.pexels.com/photos/4354586/pexels-photo-4354586.jpeg",
     description:
       "A calm creative workshop with a low-sensory setup and accessible studio space.",
     accessibilityFeatures: [
@@ -96,7 +96,7 @@ export const mockEvents = [
     price: "$10",
     creator: "Thinkery Museum",
     imageUrl:
-      "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=1200&q=80",
+      "https://images.pexels.com/photos/33465620/pexels-photo-33465620.jpeg",
     description:
       "A hands-on science event for families with captions and accessible paths.",
     accessibilityFeatures: [
@@ -116,7 +116,7 @@ export const mockEvents = [
     price: "FREE",
     creator: "Austin Wellness Collective",
     imageUrl:
-      "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80",
+      "https://images.pexels.com/photos/8437050/pexels-photo-8437050.jpeg",
     description:
       "An outdoor yoga session designed for all levels with accessible restrooms and step-free access.",
     accessibilityFeatures: [
@@ -138,7 +138,7 @@ export const mockEvents = [
     price: "FREE",
     creator: "Austin Garden Collective",
     imageUrl:
-      "https://images.pexels.com/photos/414160/pexels-photo-414160.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "https://images.pexels.com/photos/8415711/pexels-photo-8415711.jpeg",
     description:
       "A peaceful garden walk with step-free paths, wheelchair access, and quiet rest areas.",
     accessibilityFeatures: [

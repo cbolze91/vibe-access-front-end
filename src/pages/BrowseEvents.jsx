@@ -9,8 +9,6 @@ import {
   Accessibility,
   Languages,
 } from "lucide-react";
-import { useState } from "react";
-import { Link } from "react-router";
 import { mockEvents } from "../data/mockEvents";
 
 const accessibilityFilters = [
