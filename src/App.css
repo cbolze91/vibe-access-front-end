@@ -831,7 +831,7 @@ button {
 
   .featured-grid .event-card {
     display: grid;
-    grid-template-columns: 118px minmax(0, 1fr) 36px;
+    grid-template-columns: 138px minmax(0, 1fr) 32px;
     min-height: 112px;
     border: 1px solid #dfe7f2;
     border-radius: 0.95rem;
@@ -841,18 +841,28 @@ button {
   }
 
   .featured-grid .event-card__image-wrap {
-    width: 118px;
+    width: 138px;
     height: 112px;
     aspect-ratio: auto;
     border-radius: 0;
+    background: #e2e8f0;
+  }
+
+  /* Keeps mobile featured images from feeling cropped too early. */
+  .featured-grid .event-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
   }
 
   .featured-grid .price-pill {
     right: 0.45rem;
     bottom: 0.45rem;
     left: auto;
-    font-size: 0.7rem;
-    padding: 0.28rem 0.5rem;
+    font-size: 0.68rem;
+    padding: 0.28rem 0.48rem;
+    border-radius: 0.52rem;
   }
 
   .featured-grid .heart-button {
@@ -861,7 +871,7 @@ button {
     justify-self: center;
     width: 30px;
     height: 30px;
-    margin-top: 0.6rem;
+    margin-top: 0.55rem;
     border: 0;
     background: transparent;
     color: #64748b;
@@ -869,8 +879,8 @@ button {
   }
 
   .featured-grid .heart-button svg {
-    width: 22px;
-    height: 22px;
+    width: 21px;
+    height: 21px;
   }
 
   .featured-grid .event-card__content {
@@ -879,13 +889,13 @@ button {
   }
 
   .featured-grid .event-card h3 {
-    font-size: 0.96rem;
+    font-size: 0.92rem;
     line-height: 1.15;
     margin-bottom: 0.3rem;
   }
 
   .featured-grid .event-meta {
-    font-size: 0.76rem;
+    font-size: 0.72rem;
     line-height: 1.25;
   }
 
@@ -895,8 +905,8 @@ button {
   }
 
   .featured-grid .icon-row {
-    gap: 0.45rem;
-    margin: 0.5rem 0 0;
+    gap: 0.42rem;
+    margin: 0.48rem 0 0;
   }
 
   .featured-grid .icon-row svg {
@@ -1056,16 +1066,25 @@ button {
   }
 
   .featured-grid .event-card {
-    grid-template-columns: 108px minmax(0, 1fr) 32px;
+    grid-template-columns: 128px minmax(0, 1fr) 30px;
   }
 
   .featured-grid .event-card__image-wrap {
-    width: 108px;
+    width: 128px;
     height: 108px;
   }
 
   .featured-grid .event-card h3 {
-    font-size: 0.92rem;
+    font-size: 0.88rem;
+  }
+
+  .featured-grid .event-meta {
+    font-size: 0.7rem;
+  }
+
+  .featured-grid .icon-row svg {
+    width: 14px;
+    height: 14px;
   }
 
   .event-row {
