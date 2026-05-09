@@ -116,4 +116,4 @@ Current status:
 
 ## Team
 
-Built by Thara Messeroux and Christina Boles for the General Assembly SDE Unit 3 MERN CRUD group project.
+Collaborative full-stack build by Thara Messeroux and Christina Boles, with a focus on accessible event discovery, responsive UI, authentication, and event/RSPV workflows.
