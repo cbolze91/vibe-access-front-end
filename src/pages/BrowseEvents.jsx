@@ -1,3 +1,4 @@
+// src/pages/BrowseEvents.jsx
 import {
   Calendar,
   Captions,
@@ -33,20 +34,20 @@ function FeatureIcon({ feature }) {
 
   const Icon = iconMap[feature] || Accessibility;
 
-  // Keeps feature icons consistent with the hi-fi.
+  // Keeps accessibility icons consistent across event cards.
   return <Icon size={20} strokeWidth={2.25} aria-hidden="true" />;
 }
 
 function BrowseEvents() {
-  // Featured Events shows a full browse row like Airbnb.
-  const featuredEvents = mockEvents.slice(0, 9);
+  // Featured Events shows a curated row of highlighted events.
+  const featuredEvents = mockEvents.slice(0, 7);
 
-  // All Events stays focused and unchanged visually.
+  // All Events keeps the list focused for the current MVP.
   const allEvents = mockEvents.slice(3, 6);
 
   return (
     <main className="page-shell">
-      {/* Hero section introduces the main event discovery experience. */}
+      {/* Hero introduces the main event discovery experience. */}
       <section className="browse-hero">
         <div className="hero-text">
           <h1>Find accessible events.</h1>
@@ -71,7 +72,7 @@ function BrowseEvents() {
           <button type="submit">Search</button>
         </form>
 
-        {/* Accessibility filters make the product purpose clear immediately. */}
+        {/* Accessibility filters make the app purpose clear quickly. */}
         <div className="accessibility-grid" aria-label="Accessibility filters">
           {accessibilityFilters.map(({ label, icon: Icon }) => (
             <button type="button" className="accessibility-tile" key={label}>
@@ -82,7 +83,7 @@ function BrowseEvents() {
         </div>
       </section>
 
-      {/* Featured events are the most important events at the top. */}
+      {/* Featured Events highlights the most important events first. */}
       <section className="section-block">
         <div className="section-heading">
           <h2>Featured Events</h2>
@@ -98,7 +99,7 @@ function BrowseEvents() {
                 <button
                   className="heart-button"
                   type="button"
-                  aria-label="Save event"
+                  aria-label={`Save ${event.title}`}
                 >
                   <Heart size={24} />
                 </button>
@@ -131,17 +132,10 @@ function BrowseEvents() {
               </div>
             </article>
           ))}
-
-          {featuredEvents.map((event) => (
-            <article className="event-card" key={event.id}>
-              ...
-            </article>
-          ))}
-
         </div>
       </section>
 
-      {/* All events gives users a scannable list after featured cards. */}
+      {/* All Events gives users a scannable event list. */}
       <section className="section-block" id="all-events">
         <div className="section-heading">
           <h2>All Events</h2>
@@ -163,10 +157,12 @@ function BrowseEvents() {
 
               <div className="event-row__details">
                 <h3>{event.title}</h3>
+
                 <p>
                   <Calendar size={15} aria-hidden="true" />
                   {event.date} · {event.time}
                 </p>
+
                 <p>
                   <MapPin size={15} aria-hidden="true" />
                   {event.location}
@@ -195,12 +191,12 @@ function BrowseEvents() {
         </button>
       </section>
 
-      {/* Mobile bottom navigation mirrors the mobile hi-fi pattern. */}
+      {/* Mobile bottom navigation keeps key actions easy to reach. */}
       <nav className="bottom-nav" aria-label="Mobile bottom navigation">
         <a href="/">Browse</a>
         <a href="/my-events">My Events</a>
         <a href="/create">Create</a>
-        <a href="/login">Profile</a>
+        <a href="/sign-in">Profile</a>
       </nav>
     </main>
   );

@@ -1,3 +1,4 @@
+// src/components/Navbar.jsx
 import { useState } from "react";
 import { Link } from "react-router";
 import { Menu, X } from "lucide-react";
@@ -5,13 +6,14 @@ import { Menu, X } from "lucide-react";
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // Closes the mobile menu after a user clicks a link.
   function closeMenu() {
     setIsMenuOpen(false);
   }
 
   return (
     <header className="navbar">
-      {/* Logo image keeps the brand close to the hi-fi design. */}
+      {/* Brand logo links users back to the Browse Events page. */}
       <Link
         to="/"
         className="brand"
@@ -25,7 +27,7 @@ function Navbar() {
         />
       </Link>
 
-      {/* Desktop navigation helps users move between main pages. */}
+      {/* Main desktop navigation. */}
       <nav className="navbar__links" aria-label="Main navigation">
         <Link className="active-link" to="/">
           Browse Events
@@ -34,17 +36,17 @@ function Navbar() {
         <Link to="/create">Create Event</Link>
       </nav>
 
-      {/* Desktop auth actions match the hi-fi header. */}
+      {/* Desktop sign-in and sign-up actions. */}
       <div className="navbar__actions">
-        <Link className="btn btn-light" to="/login">
+        <Link className="btn btn-light" to="/sign-in">
           Log in
         </Link>
-        <Link className="btn btn-primary" to="/signup">
+        <Link className="btn btn-primary" to="/sign-up">
           Sign up
         </Link>
       </div>
 
-      {/* Mobile hamburger opens and closes the dropdown menu. */}
+      {/* Mobile menu button. */}
       <button
         className="mobile-menu"
         type="button"
@@ -55,7 +57,7 @@ function Navbar() {
         {isMenuOpen ? <X size={26} /> : <Menu size={26} />}
       </button>
 
-      {/* Mobile dropdown gives users the same links as desktop. */}
+      {/* Mobile dropdown uses the same core links as desktop. */}
       {isMenuOpen && (
         <nav className="mobile-dropdown" aria-label="Mobile navigation">
           <Link className="active-link" to="/" onClick={closeMenu}>
@@ -67,12 +69,12 @@ function Navbar() {
           <Link to="/create" onClick={closeMenu}>
             Create Event
           </Link>
-          <Link to="/login" onClick={closeMenu}>
+          <Link to="/sign-in" onClick={closeMenu}>
             Log in
           </Link>
           <Link
             className="mobile-dropdown__primary"
-            to="/signup"
+            to="/sign-up"
             onClick={closeMenu}
           >
             Sign up
