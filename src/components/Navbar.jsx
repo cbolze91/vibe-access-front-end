@@ -6,14 +6,13 @@ import { Menu, X } from "lucide-react";
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Closes the mobile menu after a user clicks a link.
   function closeMenu() {
     setIsMenuOpen(false);
   }
 
   return (
     <header className="navbar">
-      {/* Brand logo links users back to the Browse Events page. */}
+      {/* Brand link brings users back to the Browse Events page. */}
       <Link
         to="/"
         className="brand"
@@ -27,7 +26,7 @@ function Navbar() {
         />
       </Link>
 
-      {/* Main desktop navigation. */}
+      {/* Main navigation links for desktop users. */}
       <nav className="navbar__links" aria-label="Main navigation">
         <Link className="active-link" to="/">
           Browse Events
@@ -36,7 +35,7 @@ function Navbar() {
         <Link to="/create">Create Event</Link>
       </nav>
 
-      {/* Desktop sign-in and sign-up actions. */}
+      {/* Auth links use the shared auth routes. */}
       <div className="navbar__actions">
         <Link className="btn btn-light" to="/sign-in">
           Log in
@@ -46,7 +45,7 @@ function Navbar() {
         </Link>
       </div>
 
-      {/* Mobile menu button. */}
+      {/* Mobile menu button opens and closes the dropdown. */}
       <button
         className="mobile-menu"
         type="button"
@@ -57,7 +56,7 @@ function Navbar() {
         {isMenuOpen ? <X size={26} /> : <Menu size={26} />}
       </button>
 
-      {/* Mobile dropdown uses the same core links as desktop. */}
+      {/* Mobile dropdown keeps the same page links available on small screens. */}
       {isMenuOpen && (
         <nav className="mobile-dropdown" aria-label="Mobile navigation">
           <Link className="active-link" to="/" onClick={closeMenu}>
