@@ -132,7 +132,11 @@ function BrowseEvents() {
 
                 <p className="event-meta">
                   <Calendar size={16} aria-hidden="true" />
-                  {event.date} · {event.time}
+                  {new Date(event.date).toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric',
+                  })} · {event.time}
                 </p>
 
                 <p className="event-meta">
@@ -182,7 +186,11 @@ function BrowseEvents() {
 
                 <p>
                   <Calendar size={15} aria-hidden="true" />
-                  {event.date} · {event.time}
+                  {new Date(event.date).toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric',
+                  })} · {event.time}
                 </p>
 
                 <p>

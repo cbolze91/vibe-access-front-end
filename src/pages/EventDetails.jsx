@@ -77,7 +77,11 @@ useEffect(() => {
       <h1>{event.title}</h1>
 
       <p>
-        {event.date?.slice(0, 10)} · {event.time}
+        {new Date(event.date).toLocaleDateString('en-US', {
+            weekday: 'short',
+            month: 'short',
+            day: 'numeric',
+        })} · {event.time}
       </p>
 
       <p>{event.location}</p>
