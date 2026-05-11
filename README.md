@@ -21,6 +21,18 @@ The goal is to create a clean, inclusive, and easy-to-use event discovery experi
 
 ---
 
+## Screenshots
+
+### Desktop View
+
+![VibeAccess desktop Browse Events page](docs/screenshots/browse-events-desktop.png)
+
+### Mobile View
+
+![VibeAccess mobile Browse Events page](docs/screenshots/browse-events-mobile.png)
+
+---
+
 ## Tech Stack
 
 - React
