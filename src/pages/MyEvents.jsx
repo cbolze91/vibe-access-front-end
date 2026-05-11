@@ -38,28 +38,50 @@ const MyEvents = () => {
   };
 
   return (
-    <main className="page-shell">
+    <main className="page-shell my-events-page">
       <h1>My Events</h1>
 
-      {message && <p>{message}</p>}
+      {message && <p className="my-events-message">{message}</p>}
 
       {!rsvps.length ? (
-        <p>You have not RSVP’d to any events yet.</p>
+        <p className="my-events-empty">You have not RSVP’d to any events yet.</p>
       ) : (
-        <section>
+        <section className="my-events-list">
           {rsvps.map((rsvp) => (
-            <article key={rsvp._id}>
-              <h2>{rsvp.event?.title}</h2>
-              <p>
-                {rsvp.event?.date?.slice(0, 10)} · {rsvp.event?.time}
-              </p>
-              <p>{rsvp.event?.location}</p>
+            <article className="my-event-card" key={rsvp._id}>
+              {rsvp.event?.imageUrl && (
+                <img
+                  src={rsvp.event.imageUrl}
+                  alt={rsvp.event.title}
+                  className="my-event-image"
+                />
+              )}
 
-              <Link to={`/events/${rsvp.event?._id}`}>View details</Link>
+              <div className="my-event-content">
+                <h2>{rsvp.event?.title}</h2>
 
-              <button type="button" onClick={() => handleCancelRsvp(rsvp._id)}>
-                Cancel RSVP
-              </button>
+                <p>
+                  {new Date(rsvp.event?.date).toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric',
+                  })}{' '}
+                  · {rsvp.event?.time}
+                </p>
+
+                <p>{rsvp.event?.location}</p>
+
+                <div className="my-event-actions">
+                  <Link to={`/events/${rsvp.event?._id}`}>View details</Link>
+
+                  <button
+                    type="button"
+                    onClick={() => handleCancelRsvp(rsvp._id)}
+                  >
+                    Cancel RSVP
+                  </button>
+                </div>
+              </div>
             </article>
           ))}
         </section>
