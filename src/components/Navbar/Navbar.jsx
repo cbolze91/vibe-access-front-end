@@ -1,21 +1,26 @@
-import { useContext, useState } from "react";
+// src/components/Navbar/Navbar.jsx
+import { useState } from "react";
 import { Link, NavLink } from "react-router";
 import { Menu, X } from "lucide-react";
-import { UserContext } from "../../context/UserContext";
 import * as authService from "../../services/authService";
+import { useUser } from "../../context/useUser";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user, setUser } = useContext(UserContext);
+
+  const { user, logout } = useUser();
 
   const closeMenu = () => setIsMenuOpen(false);
 
   const handleSignOut = () => {
     authService.signout();
-    setUser(null);
+
+    logout();
+
     closeMenu();
   };
 
+  // mobile also shows who is signed in.
   return (
     <header className="site-header">
       <nav className="navbar" aria-label="Main navigation">
@@ -36,9 +41,11 @@ function Navbar() {
           <NavLink to="/" className="nav-link">
             Browse Events
           </NavLink>
+
           <NavLink to="/my-events" className="nav-link">
             My Events
           </NavLink>
+
           <NavLink to="/create" className="nav-link">
             Create Event
           </NavLink>
@@ -47,7 +54,11 @@ function Navbar() {
         <div className="desktop-auth">
           {user ? (
             <>
-              <span className="nav-user">Hi, {user.username}</span>
+              {/* shows a stronger signed-in greeting with fallback text. */}
+              <span className="nav-greeting">
+                Hi, <strong>{user?.username || "there"}</strong>
+              </span>
+
               <NavLink
                 to="/"
                 className="nav-button nav-button-secondary"
@@ -58,9 +69,13 @@ function Navbar() {
             </>
           ) : (
             <>
-              <NavLink to="/sign-in" className="nav-button nav-button-secondary">
+              <NavLink
+                to="/sign-in"
+                className="nav-button nav-button-secondary"
+              >
                 Log in
               </NavLink>
+
               <NavLink to="/sign-up" className="nav-button nav-button-primary">
                 Sign up
               </NavLink>
@@ -84,22 +99,44 @@ function Navbar() {
           <NavLink to="/" className="mobile-nav-link" onClick={closeMenu}>
             Browse Events
           </NavLink>
-          <NavLink to="/my-events" className="mobile-nav-link" onClick={closeMenu}>
+
+          <NavLink
+            to="/my-events"
+            className="mobile-nav-link"
+            onClick={closeMenu}
+          >
             My Events
           </NavLink>
+
           <NavLink to="/create" className="mobile-nav-link" onClick={closeMenu}>
             Create Event
           </NavLink>
 
           {user ? (
-            <NavLink to="/" className="mobile-nav-link" onClick={handleSignOut}>
-              Sign out
-            </NavLink>
+            <>
+              {/* ✅ Fixed: mobile also shows who is signed in. */}
+              <span className="mobile-nav-link mobile-nav-user">
+                Hi, {user?.username || "there"}
+              </span>
+
+              <NavLink
+                to="/"
+                className="mobile-nav-link"
+                onClick={handleSignOut}
+              >
+                Sign out
+              </NavLink>
+            </>
           ) : (
             <>
-              <NavLink to="/sign-in" className="mobile-nav-link" onClick={closeMenu}>
+              <NavLink
+                to="/sign-in"
+                className="mobile-nav-link"
+                onClick={closeMenu}
+              >
                 Log in
               </NavLink>
+
               <NavLink
                 to="/sign-up"
                 className="mobile-nav-link mobile-nav-link-primary"

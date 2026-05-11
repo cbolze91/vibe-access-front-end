@@ -1,93 +1,100 @@
-import { useContext, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router';
-import { UserContext } from '../context/UserContext';
-import * as rsvpService from '../services/rsvpService';
+// src/pages/MyEvents.jsx
+import { Link } from "react-router";
+import { Calendar, MapPin, Trash2, ArrowRight } from "lucide-react";
+import { useUser } from "../context/useUser";
+import { getUserRsvps, cancelRsvp } from "../services/rsvpService";
 
-const MyEvents = () => {
-  const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+function MyEvents() {
+  const { user } = useUser();
 
-  const [rsvps, setRsvps] = useState([]);
-  const [message, setMessage] = useState('');
+  // Only signed-in users can view their RSVP list.
+  if (!user) {
+    return (
+      <main className="my-events-page">
+        <section className="my-events-empty">
+          <h1>Sign in to view your events</h1>
+          <p>Your RSVP list is private, so please sign in first.</p>
 
-  useEffect(() => {
-    if (!user) {
-      navigate('/sign-in');
-      return;
-    }
+          <Link to="/sign-in" className="my-events-primary-link">
+            Sign in
+          </Link>
+        </section>
+      </main>
+    );
+  }
 
-    const fetchRsvps = async () => {
-      try {
-        const rsvpData = await rsvpService.index();
-        setRsvps(rsvpData);
-      } catch (error) {
-        setMessage(error.message);
-      }
-    };
+  const rsvps = getUserRsvps(user.username);
 
-    fetchRsvps();
-  }, [user, navigate]);
-
-  const handleCancelRsvp = async (rsvpId) => {
-    try {
-      await rsvpService.deleteRsvp(rsvpId);
-      setRsvps(rsvps.filter((rsvp) => rsvp._id !== rsvpId));
-    } catch (error) {
-      setMessage(error.message);
-    }
+  const handleCancelRsvp = (eventId) => {
+    cancelRsvp(eventId, user.username);
+    window.location.reload();
   };
 
   return (
-    <main className="page-shell my-events-page">
-      <h1>My Events</h1>
+    <main className="my-events-page">
+      <section className="my-events-header">
+        <p>My Events</p>
+        <h1>Your saved RSVPs</h1>
+        <span>{rsvps.length} event{rsvps.length === 1 ? "" : "s"}</span>
+      </section>
 
-      {message && <p className="my-events-message">{message}</p>}
+      {rsvps.length === 0 ? (
+        <section className="my-events-empty">
+          <h2>No RSVPs yet</h2>
+          <p>Browse accessible events and RSVP to build your list.</p>
 
-      {!rsvps.length ? (
-        <p className="my-events-empty">You have not RSVP’d to any events yet.</p>
+          <Link to="/" className="my-events-primary-link">
+            Browse events
+          </Link>
+        </section>
       ) : (
         <section className="my-events-list">
-          {rsvps.map((rsvp) => (
-            <article className="my-event-card" key={rsvp._id}>
-              {rsvp.event?.imageUrl && (
-                <img
-                  src={rsvp.event.imageUrl}
-                  alt={rsvp.event.title}
-                  className="my-event-image"
-                />
-              )}
+          {rsvps.map((rsvp) => {
+            const event = rsvp.event;
+            const image = event.image || event.imageUrl || event.img || event.photo || "";
+            const price = String(event.price || "FREE").startsWith("$")
+              ? event.price
+              : event.price === 0 || String(event.price).toLowerCase() === "free"
+              ? "FREE"
+              : `$${event.price}`;
 
-              <div className="my-event-content">
-                <h2>{rsvp.event?.title}</h2>
+            return (
+              <article className="my-event-card" key={rsvp.id}>
+                {image && <img src={image} alt={event.title} />}
 
-                <p>
-                  {new Date(rsvp.event?.date).toLocaleDateString('en-US', {
-                    weekday: 'short',
-                    month: 'short',
-                    day: 'numeric',
-                  })}{' '}
-                  · {rsvp.event?.time}
-                </p>
+                <div className="my-event-card-content">
+                  <span className="my-event-price">{price}</span>
+                  <h2>{event.title}</h2>
 
-                <p>{rsvp.event?.location}</p>
+                  <p>
+                    <Calendar size={16} />
+                    {event.date} · {event.time}
+                  </p>
 
-                <div className="my-event-actions">
-                  <Link to={`/events/${rsvp.event?._id}`}>View details</Link>
+                  <p>
+                    <MapPin size={16} />
+                    {event.location}
+                  </p>
 
-                  <button
-                    type="button"
-                    onClick={() => handleCancelRsvp(rsvp._id)}
-                  >
-                    Cancel RSVP
-                  </button>
+                  <div className="my-event-actions">
+                    <Link to={`/events/${event.id}`}>
+                      View details
+                      <ArrowRight size={16} />
+                    </Link>
+
+                    <button onClick={() => handleCancelRsvp(event.id)}>
+                      <Trash2 size={16} />
+                      Cancel RSVP
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </section>
       )}
     </main>
   );
-};
+}
 
 export default MyEvents;
