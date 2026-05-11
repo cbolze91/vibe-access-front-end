@@ -1,6 +1,5 @@
-// src/context/UserContext.jsx
 import { useState } from "react";
-import { UserContext } from "./userContext";
+import { UserContext } from "./UserContext";
 
 // Changed: helper reads the user from the JWT token.
 // This lets the navbar show: "Hi, username".

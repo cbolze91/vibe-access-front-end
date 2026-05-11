@@ -1,12 +1,11 @@
-// src/components/SignUpForm/SignUpForm.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import * as authService from "../../services/authService";
-import { useUser } from "../../context/useUser";
+import { useUser } from "../../context/UserContext";
 
 function SignUpForm() {
   const navigate = useNavigate();
-  const { login } = useUser();
+  const { setUser } = useContext(UserContext);
 
   // Keeps track of what the user types.
   const [formData, setFormData] = useState({
