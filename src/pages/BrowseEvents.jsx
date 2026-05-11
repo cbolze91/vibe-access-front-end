@@ -12,6 +12,7 @@ import {
   Accessibility,
   Languages,
 } from "lucide-react";
+import { mockEvents } from "../data/mockEvents";
 
 const CREATED_EVENTS_KEY = "vibeaccess_created_events";
 
