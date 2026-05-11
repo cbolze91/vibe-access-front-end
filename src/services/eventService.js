@@ -18,18 +18,12 @@ const handleResponse = async (response) => {
 };
 
 const index = async () => {
-  const response = await fetch(BASE_URL, {
-    headers: getAuthHeaders(),
-  });
-
+  const response = await fetch(BASE_URL);
   return handleResponse(response);
 };
 
 const show = async (eventId) => {
-  const response = await fetch(`${BASE_URL}/${eventId}`, {
-    headers: getAuthHeaders(),
-  });
-
+  const response = await fetch(`${BASE_URL}/${eventId}`);
   return handleResponse(response);
 };
 
