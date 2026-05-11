@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import {
   ArrowLeft,
@@ -12,14 +12,14 @@ import {
   Heart,
 } from "lucide-react";
 
-import { useUser } from "../context/useUser";
+import { UserContext } from "../context/UserContext";
 import * as eventService from "../services/eventService";
 import * as rsvpService from "../services/rsvpService";
 
 function EventDetails() {
   const { eventId } = useParams();
   const navigate = useNavigate();
-  const { user } = useUser();
+  const { user } = useContext(UserContext);
 
   const [event, setEvent] = useState(null);
   const [message, setMessage] = useState("");
@@ -184,7 +184,8 @@ function EventDetails() {
           </button>
         )}
 
-        {user && event.creator?._id === user._id && (
+        {user &&
+          String(event.creator?._id || event.creator) === String(user._id) && (
           <>
             <Link
               to={`/events/${event._id}/edit`}

@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import * as authService from "../../services/authService";
-import { useUser } from "../../context/useUser";
+import { UserContext } from "../../context/UserContext";
 
 function SignUpForm() {
   const navigate = useNavigate();
-  const { login } = useUser();
+
+  const { login } = useContext(UserContext);
 
   const [formData, setFormData] = useState({
     username: "",
@@ -24,6 +25,7 @@ function SignUpForm() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+
     setErrorMessage("");
 
     if (formData.password !== formData.confirmPassword) {
@@ -41,7 +43,7 @@ function SignUpForm() {
         login(data.token);
         navigate("/");
       } else {
-        setErrorMessage("Sign up failed. Please try again.");
+        setErrorMessage("Sign up failed.");
       }
     } catch (error) {
       setErrorMessage(error.message);
@@ -53,9 +55,12 @@ function SignUpForm() {
       <form className="auth-card" onSubmit={handleSubmit}>
         <h1>Sign Up</h1>
 
-        {errorMessage && <p className="auth-message">{errorMessage}</p>}
+        {errorMessage && (
+          <p className="auth-message">{errorMessage}</p>
+        )}
 
         <label htmlFor="username">Username</label>
+
         <input
           id="username"
           name="username"
@@ -66,6 +71,7 @@ function SignUpForm() {
         />
 
         <label htmlFor="password">Password</label>
+
         <input
           id="password"
           name="password"
@@ -75,7 +81,10 @@ function SignUpForm() {
           required
         />
 
-        <label htmlFor="confirmPassword">Confirm Password</label>
+        <label htmlFor="confirmPassword">
+          Confirm Password
+        </label>
+
         <input
           id="confirmPassword"
           name="confirmPassword"
@@ -85,7 +94,9 @@ function SignUpForm() {
           required
         />
 
-        <button type="submit">Sign Up</button>
+        <button type="submit">
+          Sign Up
+        </button>
       </form>
     </main>
   );

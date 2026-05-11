@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router";
 import { Calendar, MapPin, Trash2, ArrowRight } from "lucide-react";
-import { useUser } from "../context/useUser";
+
+import { UserContext } from "../context/UserContext";
 import * as rsvpService from "../services/rsvpService";
 
 function MyEvents() {
-  const { user } = useUser();
+  const { user } = useContext(UserContext);
+
   const [rsvps, setRsvps] = useState([]);
   const [message, setMessage] = useState("");
 
@@ -29,8 +31,15 @@ function MyEvents() {
       <main className="my-events-page">
         <section className="my-events-empty">
           <h1>Sign in to view your events</h1>
-          <p>Your RSVP list is private, so please sign in first.</p>
-          <Link to="/sign-in" className="my-events-primary-link">
+
+          <p>
+            Your RSVP list is private, so please sign in first.
+          </p>
+
+          <Link
+            to="/sign-in"
+            className="my-events-primary-link"
+          >
             Sign in
           </Link>
         </section>
@@ -41,7 +50,10 @@ function MyEvents() {
   async function handleCancelRsvp(rsvpId) {
     try {
       await rsvpService.cancelRsvp(rsvpId);
-      setRsvps(rsvps.filter((rsvp) => rsvp._id !== rsvpId));
+
+      setRsvps(
+        rsvps.filter((rsvp) => rsvp._id !== rsvpId)
+      );
     } catch (error) {
       setMessage(error.message);
     }
@@ -51,9 +63,12 @@ function MyEvents() {
     <main className="my-events-page">
       <section className="my-events-header">
         <p>My Events</p>
+
         <h1>Your saved RSVPs</h1>
+
         <span>
-          {rsvps.length} event{rsvps.length === 1 ? "" : "s"}
+          {rsvps.length} event
+          {rsvps.length === 1 ? "" : "s"}
         </span>
       </section>
 
@@ -62,8 +77,15 @@ function MyEvents() {
       {rsvps.length === 0 ? (
         <section className="my-events-empty">
           <h2>No RSVPs yet</h2>
-          <p>Browse accessible events and RSVP to build your list.</p>
-          <Link to="/" className="my-events-primary-link">
+
+          <p>
+            Browse accessible events and RSVP to build your list.
+          </p>
+
+          <Link
+            to="/"
+            className="my-events-primary-link"
+          >
             Browse events
           </Link>
         </section>
@@ -73,15 +95,27 @@ function MyEvents() {
             const event = rsvp.event;
 
             return (
-              <article className="my-event-card" key={rsvp._id}>
-                {event?.imageUrl && <img src={event.imageUrl} alt={event.title} />}
+              <article
+                className="my-event-card"
+                key={rsvp._id}
+              >
+                {event?.imageUrl && (
+                  <img
+                    src={event.imageUrl}
+                    alt={event.title}
+                  />
+                )}
 
                 <div className="my-event-card-content">
-                  <span className="my-event-price">{event?.price || "FREE"}</span>
+                  <span className="my-event-price">
+                    {event?.price || "FREE"}
+                  </span>
+
                   <h2>{event?.title}</h2>
 
                   <p>
                     <Calendar size={16} />
+
                     {event?.date
                       ? new Date(event.date).toLocaleDateString()
                       : "Date unavailable"}{" "}
@@ -99,7 +133,12 @@ function MyEvents() {
                       <ArrowRight size={16} />
                     </Link>
 
-                    <button type="button" onClick={() => handleCancelRsvp(rsvp._id)}>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        handleCancelRsvp(rsvp._id)
+                      }
+                    >
                       <Trash2 size={16} />
                       Cancel RSVP
                     </button>

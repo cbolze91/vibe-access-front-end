@@ -1,14 +1,14 @@
-// src/components/Navbar/Navbar.jsx
 import { useState } from "react";
 import { Link, NavLink } from "react-router";
 import { Menu, X } from "lucide-react";
 import * as authService from "../../services/authService";
-import { useUser } from "../../context/useUser";
+import { UserContext } from "../../context/UserContext";
+import { useContext } from "react";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const { user, logout } = useUser();
+  const { user, logout } = useContext(UserContext);
 
   const closeMenu = () => setIsMenuOpen(false);
 
