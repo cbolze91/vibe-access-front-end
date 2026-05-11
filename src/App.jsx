@@ -1,4 +1,3 @@
-// src/App.jsx
 import { Route, Routes } from "react-router";
 import Navbar from "./components/Navbar/Navbar";
 import BrowseEvents from "./pages/BrowseEvents";

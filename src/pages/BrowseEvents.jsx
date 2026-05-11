@@ -12,7 +12,6 @@ import {
   Accessibility,
   Languages,
 } from "lucide-react";
-import { mockEvents } from "../data/mockEvents";
 
 const CREATED_EVENTS_KEY = "vibeaccess_created_events";
 
@@ -194,7 +193,11 @@ function BrowseEvents() {
 
                 <p className="event-meta">
                   <Calendar size={16} aria-hidden="true" />
-                  {event.date} · {event.time}
+                  {new Date(event.date).toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric',
+                  })} · {event.time}
                 </p>
 
                 <p className="event-meta">
@@ -251,7 +254,11 @@ function BrowseEvents() {
 
                 <p>
                   <Calendar size={15} aria-hidden="true" />
-                  {event.date} · {event.time}
+                  {new Date(event.date).toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric',
+                  })} · {event.time}
                 </p>
 
                 <p>

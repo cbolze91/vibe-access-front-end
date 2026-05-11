@@ -14,6 +14,7 @@ const EventForm = ({ existingEvent = null }) => {
     location: existingEvent?.location || '',
     category: existingEvent?.category || '',
     imageUrl: existingEvent?.imageUrl || '',
+    price: existingEvent?.price || '',
     description: existingEvent?.description || '',
     accessibilityFeatures: existingEvent?.accessibilityFeatures
       ? existingEvent.accessibilityFeatures.join(', ')
@@ -123,6 +124,17 @@ const EventForm = ({ existingEvent = null }) => {
             id="imageUrl"
             name="imageUrl"
             value={formData.imageUrl}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="price">Price</label>
+          <input
+            id="price"
+            name="price"
+            placeholder="FREE or $15"
+            value={formData.price}
             onChange={handleChange}
           />
         </div>
