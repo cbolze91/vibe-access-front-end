@@ -1,20 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import * as authService from "../../services/authService";
-import { useUser } from "../../context/UserContext";
+import { useUser } from "../../context/useUser";
 
 function SignUpForm() {
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
+  const { login } = useUser();
 
-  // Keeps track of what the user types.
   const [formData, setFormData] = useState({
     username: "",
     password: "",
     confirmPassword: "",
   });
 
-  // Shows a helpful message if sign up fails.
   const [errorMessage, setErrorMessage] = useState("");
 
   function handleChange(event) {
@@ -34,9 +32,11 @@ function SignUpForm() {
     }
 
     try {
-      const data = await authService.signUp(formData);
+      const data = await authService.signUp({
+        username: formData.username,
+        password: formData.password,
+      });
 
-      // Saves the token and updates the navbar user right away.
       if (data?.token) {
         login(data.token);
         navigate("/");
@@ -44,8 +44,7 @@ function SignUpForm() {
         setErrorMessage("Sign up failed. Please try again.");
       }
     } catch (error) {
-      console.error("Sign up error:", error);
-      setErrorMessage("Sign up failed. Please check that the backend is running.");
+      setErrorMessage(error.message);
     }
   }
 
