@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router';
 import { UserContext } from '../context/UserContext';
 import * as eventService from '../services/eventService';
 import * as rsvpService from '../services/rsvpService';
+import { mockEvents } from "../data/mockEvents";
 
 const EventDetails = () => {
   const { eventId } = useParams();
@@ -12,18 +13,27 @@ const EventDetails = () => {
   const [event, setEvent] = useState(null);
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    const fetchEvent = async () => {
-      try {
-        const eventData = await eventService.show(eventId);
-        setEvent(eventData);
-      } catch (error) {
-        setMessage(error.message);
-      }
-    };
+useEffect(() => {
+  const fetchEvent = async () => {
+    try {
+      const mockEvent = mockEvents.find(
+        (event) => String(event.id) === eventId
+      );
 
-    fetchEvent();
-  }, [eventId]);
+      if (mockEvent) {
+        setEvent(mockEvent);
+        return;
+      }
+
+      const eventData = await eventService.show(eventId);
+      setEvent(eventData);
+    } catch (error) {
+      setMessage(error.message);
+    }
+  };
+
+  fetchEvent();
+}, [eventId]);
 
   const handleRsvp = async () => {
     if (!user) {
