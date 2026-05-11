@@ -1,4 +1,6 @@
 import { Link } from "react-router";
+import { useEffect, useState } from "react";
+import * as eventService from "../services/eventService";
 import {
   Calendar,
   Captions,
@@ -39,11 +41,31 @@ function FeatureIcon({ feature }) {
 }
 
 function BrowseEvents() {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const eventData = await eventService.index();
+        setEvents(eventData);
+      } catch (error) {
+        console.log(error);
+        setEvents(mockEvents);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
+  // Uses backend events first, falls back to mock data if backend fails.
+  const displayEvents = events.length ? events : mockEvents;
+
   // Featured Events shows a curated row of highlighted events.
-  const featuredEvents = mockEvents.slice(0, 7);
+  const featuredEvents = displayEvents.slice(0, 7);
 
   // All Events keeps the list focused for the current MVP.
-  const allEvents = mockEvents.slice(3, 6);
+  const allEvents = displayEvents.slice(3, 6);
+
 
   return (
     <main className="page-shell">
@@ -92,7 +114,7 @@ function BrowseEvents() {
 
         <div className="featured-grid">
           {featuredEvents.map((event) => (
-            <article className="event-card" key={event.id}>
+            <article className="event-card" key={event._id || event.id}>
               <div className="event-card__image-wrap">
                 <img src={event.imageUrl} alt={event.title} />
                 <span className="price-pill">{event.price}</span>
@@ -152,7 +174,7 @@ function BrowseEvents() {
 
         <div className="event-list">
           {allEvents.map((event) => (
-            <article className="event-row" key={event.id}>
+            <article className="event-row" key={event._id || event.id}>
               <img src={event.imageUrl} alt={event.title} />
 
               <div className="event-row__details">
