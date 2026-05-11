@@ -1446,3 +1446,18 @@ button {
   color: white;
   font-weight: 800;
 }
+
+/* ===== Page Title Contrast Fix ===== */
+
+.my-events-page h1,
+.event-form-page h1 {
+  color: #07133f;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.my-events-empty,
+.my-events-message,
+.event-form-page p {
+  color: #334155;
+}
