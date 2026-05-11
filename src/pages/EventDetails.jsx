@@ -22,12 +22,24 @@ import { mockEvents } from "../data/mockEvents";
 import { useUser } from "../context/useUser";
 import { createRsvp, isEventRsvped } from "../services/rsvpService";
 
+const CREATED_EVENTS_KEY = "vibeaccess_created_events";
+
+function getCreatedEvents() {
+  try {
+    return JSON.parse(localStorage.getItem(CREATED_EVENTS_KEY)) || [];
+  } catch {
+    return [];
+  }
+}
+
 function EventDetails() {
   const { eventId } = useParams();
   const { user } = useUser();
   const [rsvpMessage, setRsvpMessage] = useState("");
 
-  const event = mockEvents.find((eventItem) => String(eventItem.id) === eventId);
+  // Details page can open both starter mock events and newly created demo events.
+  const allEvents = [...getCreatedEvents(), ...mockEvents];
+  const event = allEvents.find((eventItem) => String(eventItem.id) === eventId);
 
   if (!event) {
     return (
@@ -119,7 +131,7 @@ function EventDetails() {
     },
   ];
 
-  const relatedEvents = mockEvents
+  const relatedEvents = allEvents
     .filter((eventItem) => String(eventItem.id) !== eventId)
     .slice(0, 2);
 
