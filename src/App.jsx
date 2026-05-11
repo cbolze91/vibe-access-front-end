@@ -2,6 +2,8 @@
 import { Route, Routes } from "react-router";
 import Navbar from "./components/Navbar/Navbar";
 import BrowseEvents from "./pages/BrowseEvents";
+import EventDetails from "./pages/EventDetails";
+import MyEvents from "./pages/MyEvents";
 import SignInForm from "./components/SignInForm/SignInForm";
 import SignUpForm from "./components/SignUpForm/SignUpForm";
 import "./App.css";
@@ -15,6 +17,8 @@ function App() {
       <Routes>
         {/* Main event discovery page */}
         <Route path="/" element={<BrowseEvents />} />
+        <Route path="/events/:eventId" element={<EventDetails />} />
+          <Route path="/my-events" element={<MyEvents />} />
 
         {/* Auth pages use a modal-style card for a cleaner user experience. */}
         <Route

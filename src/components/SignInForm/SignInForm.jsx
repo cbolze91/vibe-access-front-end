@@ -1,75 +1,80 @@
-import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router';
-import { UserContext } from '../../context/UserContext';
-import * as authService from '../../services/authService';
+// src/components/SignInForm/SignInForm.jsx
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import * as authService from "../../services/authService";
+import { useUser } from "../../context/useUser";
 
-const SignInForm = () => {
+function SignInForm() {
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
+  const { login } = useUser();
 
-  const [message, setMessage] = useState('');
-
+  // Keeps track of what the user types.
   const [formData, setFormData] = useState({
-    username: '',
-    password: '',
+    username: "",
+    password: "",
   });
 
-  const { username, password } = formData;
+  // Shows a helpful message if sign in fails.
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleChange = (event) => {
-    setMessage('');
-    setFormData({ ...formData, [event.target.name]: event.target.value });
-  };
+  function handleChange(event) {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  }
 
-  const handleSubmit = async (event) => {
+  async function handleSubmit(event) {
     event.preventDefault();
+    setErrorMessage("");
 
     try {
-      const user = await authService.signin(formData);
-      setUser(user);
-      navigate('/');
-    } catch (error) {
-      setMessage(error.message);
-    }
-  };
+      const data = await authService.signIn(formData);
 
-  const isFormInvalid = () => {
-    return !(username && password);
-  };
+      // Saves the token and updates the navbar user right away.
+      if (data?.token) {
+        login(data.token);
+        navigate("/");
+      } else {
+        setErrorMessage("Sign in failed. Please check your username and password.");
+      }
+    } catch (error) {
+      console.error("Sign in error:", error);
+      setErrorMessage("Sign in failed. Please check that the backend is running.");
+    }
+  }
 
   return (
-    <main>
-      <h1>Sign In</h1>
-      <p>{message}</p>
+    <main className="auth-page">
+      <form className="auth-card" onSubmit={handleSubmit}>
+        <h1>Sign In</h1>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="signin-username">Username</label>
-          <input
-            id="signin-username"
-            name="username"
-            value={username}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        {errorMessage && <p className="auth-message">{errorMessage}</p>}
 
-        <div>
-          <label htmlFor="signin-password">Password</label>
-          <input
-            id="signin-password"
-            name="password"
-            type="password"
-            value={password}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        <label htmlFor="username">Username</label>
+        <input
+          id="username"
+          name="username"
+          type="text"
+          value={formData.username}
+          onChange={handleChange}
+          required
+        />
 
-        <button disabled={isFormInvalid()}>Sign In</button>
+        <label htmlFor="password">Password</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+
+        <button type="submit">Sign In</button>
       </form>
     </main>
   );
-};
+}
 
 export default SignInForm;
