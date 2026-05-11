@@ -58,7 +58,7 @@ function BrowseEvents() {
   }, []);
 
   // Uses backend events first, falls back to mock data if backend fails.
-  const displayEvents = events.length ? events : mockEvents;
+  const displayEvents = [...events, ...mockEvents];
 
   // Featured Events shows a curated row of highlighted events.
   const featuredEvents = displayEvents.slice(0, 7);
