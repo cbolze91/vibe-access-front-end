@@ -1,4 +1,4 @@
-// src/pages/BrowseEvents.jsx
+import { Link } from "react-router";
 import {
   Calendar,
   Captions,
@@ -126,9 +126,9 @@ function BrowseEvents() {
                   ))}
                 </div>
 
-                <a className="details-link" href="#event-details">
+                <Link className="details-link" to={`/events/${event._id || event.id}`}>
                   View details →
-                </a>
+                </Link>
               </div>
             </article>
           ))}
@@ -179,9 +179,9 @@ function BrowseEvents() {
 
               <span className="row-price">{event.price}</span>
 
-              <a className="row-link" href="#event-details">
+              <Link className="row-link" to={`/events/${event._id || event.id}`}>
                 View details →
-              </a>
+              </Link>
             </article>
           ))}
         </div>
