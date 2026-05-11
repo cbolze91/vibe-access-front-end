@@ -1,40 +1,98 @@
-import { useContext } from 'react';
-import { Link } from 'react-router';
-import { UserContext } from '../../context/UserContext';
-import * as authService from '../../services/authService';
+// src/components/Navbar/Navbar.jsx
+import { useState } from "react";
+import { Link, NavLink } from "react-router";
+import { Menu, X } from "lucide-react";
 
 function Navbar() {
-  const { user, setUser } = useContext(UserContext);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const handleSignOut = () => {
-    authService.signout();
-    setUser(null);
-  };
+  // Closes the mobile menu after a user clicks a link.
+  const closeMenu = () => setIsMenuOpen(false);
 
   return (
-    <header className="navbar">
-      <Link to="/" className="navbar__logo">
-        VibeAccess
-      </Link>
+    <header className="site-header">
+      <nav className="navbar" aria-label="Main navigation">
+        {/* Brand/logo links users back to the Browse Events page. */}
+        <Link
+          to="/"
+          className="brand"
+          aria-label="VibeAccess home"
+          onClick={closeMenu}
+        >
+          <img
+            src="/vibe-access-logo.png"
+            alt="VibeAccess"
+            className="brand-logo"
+          />
+        </Link>
 
-      <nav className="navbar__links" aria-label="Main navigation">
-        <Link to="/">Browse Events</Link>
+        {/* Desktop navigation stays visible on larger screens. */}
+        <div className="desktop-nav">
+          <NavLink to="/" className="nav-link">
+            Browse Events
+          </NavLink>
+          <NavLink to="/my-events" className="nav-link">
+            My Events
+          </NavLink>
+          <NavLink to="/create" className="nav-link">
+            Create Event
+          </NavLink>
+        </div>
 
-        {user ? (
-          <>
-            <Link to="/my-events">My Events</Link>
-            <Link to="/create">Create Event</Link>
-            <Link to="/" onClick={handleSignOut}>
-              Sign Out
-            </Link>
-          </>
-        ) : (
-          <>
-            <Link to="/sign-up">Sign Up</Link>
-            <Link to="/sign-in">Sign In</Link>
-          </>
-        )}
+        {/* Desktop auth actions stay on the right side. */}
+        <div className="desktop-auth">
+          <NavLink to="/sign-in" className="nav-button nav-button-secondary">
+            Log in
+          </NavLink>
+          <NavLink to="/sign-up" className="nav-button nav-button-primary">
+            Sign up
+          </NavLink>
+        </div>
+
+        {/* Mobile menu button appears only on smaller screens. */}
+        <button
+          className="mobile-menu-button"
+          type="button"
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isMenuOpen}
+          onClick={() => setIsMenuOpen((currentValue) => !currentValue)}
+        >
+          {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
       </nav>
+
+      {/* Mobile menu opens below the navbar. */}
+      {isMenuOpen && (
+        <div className="mobile-nav">
+          <NavLink to="/" className="mobile-nav-link" onClick={closeMenu}>
+            Browse Events
+          </NavLink>
+          <NavLink
+            to="/my-events"
+            className="mobile-nav-link"
+            onClick={closeMenu}
+          >
+            My Events
+          </NavLink>
+          <NavLink to="/create" className="mobile-nav-link" onClick={closeMenu}>
+            Create Event
+          </NavLink>
+          <NavLink
+            to="/sign-in"
+            className="mobile-nav-link"
+            onClick={closeMenu}
+          >
+            Log in
+          </NavLink>
+          <NavLink
+            to="/sign-up"
+            className="mobile-nav-link mobile-nav-link-primary"
+            onClick={closeMenu}
+          >
+            Sign up
+          </NavLink>
+        </div>
+      )}
     </header>
   );
 }
