@@ -12,7 +12,6 @@ import {
   Accessibility,
   Languages,
 } from "lucide-react";
-import { mockEvents } from "../data/mockEvents";
 
 const accessibilityFilters = [
   { label: "Wheelchair Accessible", icon: Accessibility },
@@ -43,22 +42,21 @@ function FeatureIcon({ feature }) {
 function BrowseEvents() {
   const [events, setEvents] = useState([]);
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const eventData = await eventService.index();
-        setEvents(eventData);
-      } catch (error) {
-        console.log(error);
-        setEvents(mockEvents);
-      }
-    };
+ useEffect(() => {
+  const fetchEvents = async () => {
+    try {
+      const eventData = await eventService.index();
+      setEvents(eventData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    fetchEvents();
-  }, []);
+  fetchEvents();
+}, []);
 
-  // Uses backend events first, falls back to mock data if backend fails.
-  const displayEvents = [...events, ...mockEvents];
+  // Uses backend events from MongoDB.
+  const displayEvents = events;
 
   // Featured Events shows a curated row of highlighted events.
   const featuredEvents = displayEvents.slice(0, 7);
