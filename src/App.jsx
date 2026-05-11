@@ -1,6 +1,6 @@
 // src/App.jsx
 import { Route, Routes } from "react-router";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import BrowseEvents from "./pages/BrowseEvents";
 import SignInForm from "./components/SignInForm/SignInForm";
 import SignUpForm from "./components/SignUpForm/SignUpForm";
@@ -11,13 +11,34 @@ function App() {
     <div className="app-shell">
       <Navbar />
 
-      {/* Routes decide which page appears for each URL. */}
       <Routes>
+        {/* Main event discovery page */}
         <Route path="/" element={<BrowseEvents />} />
-        <Route path="/sign-in" element={<SignInForm />} />
-        <Route path="/sign-up" element={<SignUpForm />} />
 
-        {/* Placeholder pages keep the nav working while we build the MVP. */}
+        {/* Auth pages use a modal-style card for a cleaner user experience. */}
+        <Route
+          path="/sign-in"
+          element={
+            <main className="auth-page">
+              <section className="auth-card" aria-label="Sign in form">
+                <SignInForm />
+              </section>
+            </main>
+          }
+        />
+
+        <Route
+          path="/sign-up"
+          element={
+            <main className="auth-page">
+              <section className="auth-card" aria-label="Sign up form">
+                <SignUpForm />
+              </section>
+            </main>
+          }
+        />
+
+        {/* Placeholder pages keep navigation working while the MVP is built. */}
         <Route
           path="/my-events"
           element={
