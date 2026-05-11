@@ -1,66 +1,47 @@
-// src/services/rsvpService.js
+const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL || "http://localhost:3000"}/rsvps`;
 
-const STORAGE_KEY = "vibeaccess_rsvps";
+const getAuthHeaders = () => ({
+  "Content-Type": "application/json",
+  Authorization: `Bearer ${localStorage.getItem("token")}`,
+});
 
-// Gets every saved RSVP from localStorage.
-function getAllRsvps() {
-  const savedRsvps = localStorage.getItem(STORAGE_KEY);
-  return savedRsvps ? JSON.parse(savedRsvps) : [];
-}
+async function handleResponse(response) {
+  const text = await response.text();
+  const data = text ? JSON.parse(text) : {};
 
-// Saves the updated RSVP list to localStorage.
-function saveAllRsvps(rsvps) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(rsvps));
-}
-
-// Gets only the RSVPs for the signed-in user.
-export function getUserRsvps(username) {
-  if (!username) return [];
-
-  return getAllRsvps().filter((rsvp) => rsvp.username === username);
-}
-
-// Checks if the signed-in user already RSVP'd to this event.
-export function isEventRsvped(eventId, username) {
-  if (!username) return false;
-
-  return getAllRsvps().some(
-    (rsvp) => String(rsvp.eventId) === String(eventId) && rsvp.username === username
-  );
-}
-
-// Adds one RSVP and prevents duplicates.
-export function createRsvp(event, username) {
-  if (!event || !username) return null;
-
-  const allRsvps = getAllRsvps();
-  const alreadyExists = isEventRsvped(event.id, username);
-
-  if (alreadyExists) {
-    return allRsvps.find(
-      (rsvp) => String(rsvp.eventId) === String(event.id) && rsvp.username === username
-    );
+  if (!response.ok) {
+    throw new Error(data.err || data.message || "Request failed");
   }
 
-  const newRsvp = {
-    id: `${username}-${event.id}`,
-    eventId: event.id,
-    username,
-    event,
-    createdAt: new Date().toISOString(),
-  };
-
-  saveAllRsvps([...allRsvps, newRsvp]);
-  return newRsvp;
+  return data;
 }
 
-// Removes one RSVP for the signed-in user.
-export function cancelRsvp(eventId, username) {
-  if (!username) return;
+export async function getMyRsvps() {
+  const response = await fetch(`${BASE_URL}/my-rsvps`, {
+    headers: getAuthHeaders(),
+  });
 
-  const updatedRsvps = getAllRsvps().filter(
-    (rsvp) => !(String(rsvp.eventId) === String(eventId) && rsvp.username === username)
-  );
+  return handleResponse(response);
+}
 
-  saveAllRsvps(updatedRsvps);
+export async function createRsvp(eventId) {
+  const response = await fetch(BASE_URL, {
+    method: "POST",
+    headers: getAuthHeaders(),
+    body: JSON.stringify({
+      event: eventId,
+      status: "going",
+    }),
+  });
+
+  return handleResponse(response);
+}
+
+export async function cancelRsvp(rsvpId) {
+  const response = await fetch(`${BASE_URL}/${rsvpId}`, {
+    method: "DELETE",
+    headers: getAuthHeaders(),
+  });
+
+  return handleResponse(response);
 }
