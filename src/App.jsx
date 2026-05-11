@@ -5,6 +5,7 @@ import BrowseEvents from "./pages/BrowseEvents";
 import SignInForm from "./components/SignInForm/SignInForm";
 import SignUpForm from "./components/SignUpForm/SignUpForm";
 import "./App.css";
+import CreateEvent from "./pages/CreateEvent";
 
 function App() {
   return (
@@ -45,12 +46,8 @@ function App() {
             <p className="placeholder-page">My Events page coming soon.</p>
           }
         />
-        <Route
-          path="/create"
-          element={
-            <p className="placeholder-page">Create Event page coming soon.</p>
-          }
-        />
+        <Route path="/create" element={<CreateEvent />} />
+        
       </Routes>
     </div>
   );
