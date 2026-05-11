@@ -1,4 +1,3 @@
-// src/App.jsx
 import { Route, Routes } from "react-router";
 import Navbar from "./components/Navbar/Navbar";
 import BrowseEvents from "./pages/BrowseEvents";
@@ -6,6 +5,8 @@ import SignInForm from "./components/SignInForm/SignInForm";
 import SignUpForm from "./components/SignUpForm/SignUpForm";
 import "./App.css";
 import CreateEvent from "./pages/CreateEvent";
+import EventDetails from "./pages/EventDetails";
+import MyEvents from "./pages/MyEvents";
 
 function App() {
   return (
@@ -39,15 +40,9 @@ function App() {
           }
         />
 
-        {/* Placeholder pages keep navigation working while the MVP is built. */}
-        <Route
-          path="/my-events"
-          element={
-            <p className="placeholder-page">My Events page coming soon.</p>
-          }
-        />
-        <Route path="/create" element={<CreateEvent />} />
-        
+       <Route path="/events/:eventId" element={<EventDetails />} />
+       <Route path="/my-events" element={<MyEvents />} />
+       <Route path="/create" element={<CreateEvent />} />
       </Routes>
     </div>
   );
