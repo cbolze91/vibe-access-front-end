@@ -1323,3 +1323,21 @@ button {
     width: 170px;
   }
 }
+
+/* makes signed-in greeting bold, visible */
+.nav-greeting {
+  color: #06113d;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-right: 1rem;
+}
+
+.nav-greeting strong {
+  color: #004cff;
+  font-weight: 800;
+}
+
+.mobile-nav-user {
+  font-weight: 700;
+  color: #06113d;
+}
