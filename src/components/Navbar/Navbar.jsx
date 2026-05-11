@@ -1,18 +1,24 @@
-// src/components/Navbar/Navbar.jsx
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, NavLink } from "react-router";
 import { Menu, X } from "lucide-react";
+import { UserContext } from "../../context/UserContext";
+import * as authService from "../../services/authService";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, setUser } = useContext(UserContext);
 
-  // Closes the mobile menu after a user clicks a link.
   const closeMenu = () => setIsMenuOpen(false);
+
+  const handleSignOut = () => {
+    authService.signout();
+    setUser(null);
+    closeMenu();
+  };
 
   return (
     <header className="site-header">
       <nav className="navbar" aria-label="Main navigation">
-        {/* Brand/logo links users back to the Browse Events page. */}
         <Link
           to="/"
           className="brand"
@@ -26,7 +32,6 @@ function Navbar() {
           />
         </Link>
 
-        {/* Desktop navigation stays visible on larger screens. */}
         <div className="desktop-nav">
           <NavLink to="/" className="nav-link">
             Browse Events
@@ -39,17 +44,30 @@ function Navbar() {
           </NavLink>
         </div>
 
-        {/* Desktop auth actions stay on the right side. */}
         <div className="desktop-auth">
-          <NavLink to="/sign-in" className="nav-button nav-button-secondary">
-            Log in
-          </NavLink>
-          <NavLink to="/sign-up" className="nav-button nav-button-primary">
-            Sign up
-          </NavLink>
+          {user ? (
+            <>
+              <span className="nav-user">Hi, {user.username}</span>
+              <NavLink
+                to="/"
+                className="nav-button nav-button-secondary"
+                onClick={handleSignOut}
+              >
+                Sign out
+              </NavLink>
+            </>
+          ) : (
+            <>
+              <NavLink to="/sign-in" className="nav-button nav-button-secondary">
+                Log in
+              </NavLink>
+              <NavLink to="/sign-up" className="nav-button nav-button-primary">
+                Sign up
+              </NavLink>
+            </>
+          )}
         </div>
 
-        {/* Mobile menu button appears only on smaller screens. */}
         <button
           className="mobile-menu-button"
           type="button"
@@ -61,36 +79,36 @@ function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile menu opens below the navbar. */}
       {isMenuOpen && (
         <div className="mobile-nav">
           <NavLink to="/" className="mobile-nav-link" onClick={closeMenu}>
             Browse Events
           </NavLink>
-          <NavLink
-            to="/my-events"
-            className="mobile-nav-link"
-            onClick={closeMenu}
-          >
+          <NavLink to="/my-events" className="mobile-nav-link" onClick={closeMenu}>
             My Events
           </NavLink>
           <NavLink to="/create" className="mobile-nav-link" onClick={closeMenu}>
             Create Event
           </NavLink>
-          <NavLink
-            to="/sign-in"
-            className="mobile-nav-link"
-            onClick={closeMenu}
-          >
-            Log in
-          </NavLink>
-          <NavLink
-            to="/sign-up"
-            className="mobile-nav-link mobile-nav-link-primary"
-            onClick={closeMenu}
-          >
-            Sign up
-          </NavLink>
+
+          {user ? (
+            <NavLink to="/" className="mobile-nav-link" onClick={handleSignOut}>
+              Sign out
+            </NavLink>
+          ) : (
+            <>
+              <NavLink to="/sign-in" className="mobile-nav-link" onClick={closeMenu}>
+                Log in
+              </NavLink>
+              <NavLink
+                to="/sign-up"
+                className="mobile-nav-link mobile-nav-link-primary"
+                onClick={closeMenu}
+              >
+                Sign up
+              </NavLink>
+            </>
+          )}
         </div>
       )}
     </header>
