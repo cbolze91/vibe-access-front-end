@@ -10,6 +10,7 @@ import EditEvent from "./pages/EditEvent";
 
 import SignInForm from "./components/SignInForm/SignInForm";
 import SignUpForm from "./components/SignUpForm/SignUpForm";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import "./App.css";
 
@@ -30,17 +31,29 @@ function App() {
         {/* Protected Pages */}
         <Route
           path="/my-events"
-          element={<MyEvents />}
+          element={
+            <ProtectedRoute>
+            <MyEvents />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/create"
-          element={<CreateEvent />}
+          element={
+            <ProtectedRoute>
+            <CreateEvent />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/events/:eventId/edit"
-          element={<EditEvent />}
+          element={
+            <ProtectedRoute>
+            <EditEvent />
+            </ProtectedRoute>
+            }
         />
 
         {/* Auth Pages */}
