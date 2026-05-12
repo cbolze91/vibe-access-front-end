@@ -1,8 +1,11 @@
 # VibeAccess Front End
+![VibeAccess Logo](https://images.unsplash.com/photo-1523998956902-6d4f549de43d?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)
 
 VibeAccess is a responsive React web app that helps users discover accessible events and experiences.
 
 This repository contains the **front-end** code for the VibeAccess MERN stack group project.
+
+VibeAccess was created to make event discovery more inclusive and accessibility-focused by helping users quickly identify accommodations and accessibility features before attending events.
 
 ---
 
@@ -15,9 +18,14 @@ VibeAccess helps users:
 - Create and edit events
 - RSVP to events
 - View their events and RSVPs
-- Find events with accessibility features such as wheelchair access, captions, low sensory options, and step-free entrances
+- Find events with accessibility features such as:
+    - wheelchair access 
+    - Captions provided
+    - Low sensory environments
+    - Step-free entrances
+    - Public transit nearby
 
-The goal is to create a clean, inclusive, and easy-to-use event discovery experience.
+The goal of VibeAccess is to create a clean, inclusive, and easy-to-use event discovery experience focused on accessibility and community inclusion.
 
 ---
 
@@ -25,13 +33,37 @@ The goal is to create a clean, inclusive, and easy-to-use event discovery experi
 
 ### Desktop View
 
-![VibeAccess desktop Browse Events page](docs/screenshots/browse-events-desktop.png)
+![VibeAccess desktop Browse Events page](./src/assets/Browse-Events.png)
 
 ### Mobile View
 
 ![VibeAccess mobile Browse Events page](docs/screenshots/browse-events-mobile.png)
 
+### Event Details
+
+![Event Details](./src/assets/Show-Event.png)
+
+### My Events
+
+![My Events](./src/assets/Saved-RSVP's.png)
+
 ---
+
+## Deployed App Frontend deployed application: https://vibe-access-front-end.netlify.app/
+
+---
+
+## Planning Materials Trello Board: https://trello.com/b/iqj0RvVq/vibeaccess
+
+---
+
+## Back-End Repository
+
+The back-end repository will contain the Express, MongoDB, and authentication logic.
+
+Back-end repo:
+
+`https://github.com/cbolze91/vibe-access-back-end`
 
 ## Tech Stack
 
@@ -41,6 +73,14 @@ The goal is to create a clean, inclusive, and easy-to-use event discovery experi
 - CSS
 - React Router
 - Git and GitHub
+- Lucide React Icons 
+- Fetch API
+
+### Development Tools 
+- Git 
+- GitHub 
+- VS Code 
+- Postman
 
 ---
 
@@ -55,19 +95,47 @@ This project practices:
 - Forms
 - Conditional rendering
 - API integration
+- Authentication 
+- Protected routes 
+- CRUD functionality
 - Responsive design
 - Accessibility-focused UI
 
 ---
 
-## Planned Pages
+## Core Features 
 
-- Sign Up / Log In
-- Browse Events
-- Event Details
-- Create Event
-- Edit Event
-- My Events / My RSVPs
+### Authentication 
+- User sign up 
+- User sign in 
+- User sign out 
+- JWT token authentication 
+- Protected routes and authorization 
+
+### Event Features 
+- Browse events 
+- View event details 
+- Create events 
+- Edit events 
+- Delete events 
+- RSVP to events 
+- View RSVPs in My Events 
+
+### Accessibility Features 
+- Accessibility-focused event discovery 
+- Responsive desktop and mobile layouts 
+- WCAG-conscious UI structure and contrast 
+- Accessibility feature tags and indicators 
+
+---
+
+## Planned Pages 
+- Sign Up / Log In 
+- Browse Events 
+- Event Details 
+- Create Event 
+- Edit Event 
+- My Events / My RSVPs 
 
 ---
 
@@ -85,6 +153,10 @@ Install dependencies:
 
 `npm install`
 
+Create a .env file in the project root:
+
+VITE_BACK_END_SERVER_URL=http://localhost:3000
+
 Start the development server:
 
 `npm run dev`
@@ -95,34 +167,29 @@ Open the local URL shown in the terminal:
 
 ---
 
-## Back-End Repository
+## Attributions
 
-The back-end repository will contain the Express, MongoDB, and authentication logic.
+-Lucide Icons
+https://lucide.dev/
 
-Back-end repo:
+-Pexels Images
+https://www.pexels.com/
 
-`https://github.com/cbolze91/vibe-access-back-end`
-
----
-
-## Project Status
-
-Current status:
-
-- React app created
-- Front-end repo connected to GitHub
-- Initial project setup in progress
-- UI pages and routing coming next
+-Unsplash Images
+https://unsplash.com/
 
 ---
 
-## Key Takeaways
+## Future Enhancements
 
-- A frontend app controls what users see and interact with.
-- React components help break the UI into reusable pieces.
-- Routing lets users move between pages.
-- Mock data can help build the frontend before the backend is ready.
-- A clear README helps other developers understand and run the project.
+Potential future improvements include:
+
+- Event categories and sorting
+- Saved and favorite events
+- Interactive map integration
+- Advanced accessibility filtering
+- Comment functionality
+- Additional deployment and production optimizations
 
 ---
 
