@@ -1,8 +1,10 @@
 // src/context/useUser.js
 import { useContext } from "react";
-import { UserContext } from "./userContext";
+import { UserContext } from "./UserContext.jsx";
 
-// Changed: custom hook lives in its own file for cleaner imports.
+// Simple helper so pages can read the signed-in user.
 export function useUser() {
   return useContext(UserContext);
 }
+
+export default useUser;

@@ -1,20 +1,18 @@
-// src/components/SignInForm/SignInForm.jsx
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import * as authService from "../../services/authService";
-import { useUser } from "../../context/useUser";
+import { UserContext } from "../../context/UserContext";
 
 function SignInForm() {
   const navigate = useNavigate();
-  const { login } = useUser();
 
-  // Keeps track of what the user types.
+  const { login } = useContext(UserContext);
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
 
-  // Shows a helpful message if sign in fails.
   const [errorMessage, setErrorMessage] = useState("");
 
   function handleChange(event) {
@@ -26,21 +24,20 @@ function SignInForm() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+
     setErrorMessage("");
 
     try {
       const data = await authService.signIn(formData);
 
-      // Saves the token and updates the navbar user right away.
       if (data?.token) {
         login(data.token);
         navigate("/");
       } else {
-        setErrorMessage("Sign in failed. Please check your username and password.");
+        setErrorMessage("Sign in failed.");
       }
     } catch (error) {
-      console.error("Sign in error:", error);
-      setErrorMessage("Sign in failed. Please check that the backend is running.");
+      setErrorMessage(error.message);
     }
   }
 
@@ -49,9 +46,12 @@ function SignInForm() {
       <form className="auth-card" onSubmit={handleSubmit}>
         <h1>Sign In</h1>
 
-        {errorMessage && <p className="auth-message">{errorMessage}</p>}
+        {errorMessage && (
+          <p className="auth-message">{errorMessage}</p>
+        )}
 
         <label htmlFor="username">Username</label>
+
         <input
           id="username"
           name="username"
@@ -62,6 +62,7 @@ function SignInForm() {
         />
 
         <label htmlFor="password">Password</label>
+
         <input
           id="password"
           name="password"
@@ -71,7 +72,9 @@ function SignInForm() {
           required
         />
 
-        <button type="submit">Sign In</button>
+        <button type="submit">
+          Sign In
+        </button>
       </form>
     </main>
   );

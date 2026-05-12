@@ -1,9 +1,7 @@
-// src/context/UserContext.jsx
-import { useState } from "react";
-import { UserContext } from "./userContext";
+import { createContext, useState } from "react";
 
-// Changed: helper reads the user from the JWT token.
-// This lets the navbar show: "Hi, username".
+const UserContext = createContext();
+
 function getUserFromToken(token) {
   if (!token) return null;
 
@@ -12,31 +10,25 @@ function getUserFromToken(token) {
     const decodedPayload = JSON.parse(atob(payload));
 
     return decodedPayload.user || null;
-  } catch (error) {
-    console.error("Could not decode token:", error);
+  } catch {
+    localStorage.removeItem("token");
     return null;
   }
 }
 
-// Changed: we read the saved token BEFORE useState starts.
-// This avoids the useEffect red warning completely.
 function getInitialUser() {
   const token = localStorage.getItem("token");
   return getUserFromToken(token);
 }
 
-export function UserProvider({ children }) {
+function UserProvider({ children }) {
   const [user, setUser] = useState(getInitialUser);
 
-  // Changed: call this after sign in/sign up so the navbar updates immediately.
   function login(token) {
     localStorage.setItem("token", token);
-
-    const loggedInUser = getUserFromToken(token);
-    setUser(loggedInUser);
+    setUser(getUserFromToken(token));
   }
 
-  // Changed: sign out removes the token and resets the navbar.
   function logout() {
     localStorage.removeItem("token");
     setUser(null);
@@ -48,3 +40,5 @@ export function UserProvider({ children }) {
     </UserContext.Provider>
   );
 }
+
+export { UserContext, UserProvider };

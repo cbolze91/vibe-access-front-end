@@ -1,6 +1,5 @@
-// src/pages/BrowseEvents.jsx
-import { useMemo, useState } from "react";
-import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import { Link } from "react-router";
 import {
   Calendar,
   Captions,
@@ -12,94 +11,56 @@ import {
   Accessibility,
   Languages,
 } from "lucide-react";
-import { mockEvents } from "../data/mockEvents";
-
-const CREATED_EVENTS_KEY = "vibeaccess_created_events";
+import * as eventService from "../services/eventService";
 
 const accessibilityFilters = [
-  { label: "Wheelchair Accessible", match: "wheelchair", icon: Accessibility },
-  { label: "ASL Provided", match: "asl", icon: Languages },
-  { label: "Low Sensory", match: "low sensory", icon: Headphones },
-  { label: "Captions Provided", match: "captions", icon: Captions },
-  { label: "Step-free Access", match: "step-free", icon: Accessibility },
-  { label: "Public Transit Nearby", match: "public transit", icon: Bus },
+  { label: "Wheelchair Accessible", icon: Accessibility },
+  { label: "ASL Provided", icon: Languages },
+  { label: "Low Sensory", icon: Headphones },
+  { label: "Captions Provided", icon: Captions },
+  { label: "Step-free Access", icon: Accessibility },
+  { label: "Public Transit Nearby", icon: Bus },
 ];
 
-function getCreatedEvents() {
-  try {
-    return JSON.parse(localStorage.getItem(CREATED_EVENTS_KEY)) || [];
-  } catch {
-    return [];
-  }
-}
-
-function getPriceLabel(price) {
-  if (price === 0) return "FREE";
-
-  const cleanPrice = String(price || "FREE").trim();
-
-  if (cleanPrice.toLowerCase() === "free") return "FREE";
-  if (cleanPrice.startsWith("$")) return cleanPrice;
-
-  return `$${cleanPrice}`;
-}
-
-function getEventImage(event) {
-  return event.imageUrl || event.image || event.img || event.photo || "";
-}
-
 function FeatureIcon({ feature }) {
-  const text = String(feature).toLowerCase();
+  const normalizedFeature = feature.toLowerCase();
 
-  if (text.includes("asl")) return <Languages size={18} />;
-  if (text.includes("sensory")) return <Headphones size={18} />;
-  if (text.includes("caption")) return <Captions size={18} />;
-  if (text.includes("transit")) return <Bus size={18} />;
+  if (normalizedFeature.includes("asl")) return <Languages size={20} />;
+  if (normalizedFeature.includes("caption")) return <Captions size={20} />;
+  if (normalizedFeature.includes("sensory")) return <Headphones size={20} />;
+  if (normalizedFeature.includes("transit")) return <Bus size={20} />;
 
-  return <Accessibility size={18} />;
+  return <Accessibility size={20} />;
 }
 
 function BrowseEvents() {
-  const navigate = useNavigate();
-  const [createdEvents] = useState(() => getCreatedEvents());
+  const [events, setEvents] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeFilter, setActiveFilter] = useState("");
+  const [message, setMessage] = useState("");
 
-  const allEvents = useMemo(() => {
-    return [...createdEvents, ...mockEvents];
-  }, [createdEvents]);
+  useEffect(() => {
+    async function fetchEvents() {
+      try {
+        const eventData = await eventService.index();
+        setEvents(eventData);
+      } catch (error) {
+        setMessage(error.message);
+      }
+    }
 
-  const filteredEvents = useMemo(() => {
-    return allEvents.filter((event) => {
-      const searchableText = [
-        event.title,
-        event.location,
-        event.category,
-        event.description,
-        ...(event.accessibilityFeatures || []),
-      ]
-        .join(" ")
-        .toLowerCase();
+    fetchEvents();
+  }, []);
 
-      const matchesSearch = searchableText.includes(searchTerm.toLowerCase());
-      const matchesFilter = activeFilter
-        ? searchableText.includes(activeFilter.toLowerCase())
-        : true;
-
-      return matchesSearch && matchesFilter;
-    });
-  }, [allEvents, searchTerm, activeFilter]);
+  const filteredEvents = events.filter((event) => {
+    const searchText = `${event.title} ${event.location} ${event.category}`.toLowerCase();
+    return searchText.includes(searchTerm.toLowerCase());
+  });
 
   const featuredEvents = filteredEvents.slice(0, 7);
-  const listEvents = filteredEvents.slice(0, 6);
-
-  const goToDetails = (eventId) => {
-    navigate(`/events/${eventId}`);
-  };
+  const allEvents = filteredEvents;
 
   return (
     <main className="page-shell">
-      {/* Hero: explains what the app helps users do. */}
       <section className="browse-hero">
         <div className="hero-text">
           <h1>Find accessible events.</h1>
@@ -110,14 +71,11 @@ function BrowseEvents() {
           </p>
         </div>
 
-        {/* Search: helps users narrow events by title, place, category, or feature. */}
         <form className="search-bar" onSubmit={(event) => event.preventDefault()}>
           <label htmlFor="event-search" className="sr-only">
             Search events
           </label>
-
           <Search size={22} aria-hidden="true" />
-
           <input
             id="event-search"
             type="search"
@@ -125,21 +83,12 @@ function BrowseEvents() {
             value={searchTerm}
             onChange={(event) => setSearchTerm(event.target.value)}
           />
-
           <button type="submit">Search</button>
         </form>
 
-        {/* Accessibility filters: one-click narrowing for the demo story. */}
         <div className="accessibility-grid" aria-label="Accessibility filters">
-          {accessibilityFilters.map(({ label, match, icon: Icon }) => (
-            <button
-              type="button"
-              className={`accessibility-tile ${
-                activeFilter === match ? "accessibility-tile--active" : ""
-              }`}
-              key={label}
-              onClick={() => setActiveFilter(activeFilter === match ? "" : match)}
-            >
+          {accessibilityFilters.map(({ label, icon: Icon }) => (
+            <button type="button" className="accessibility-tile" key={label}>
               <Icon size={28} aria-hidden="true" />
               <span>{label}</span>
             </button>
@@ -147,43 +96,24 @@ function BrowseEvents() {
         </div>
       </section>
 
-      {/* Featured events: image-first cards for visual browsing. */}
+      {message && <p>{message}</p>}
+
       <section className="section-block">
         <div className="section-heading">
           <h2>Featured Events</h2>
-          <button
-            className="text-link-button"
-            type="button"
-            onClick={() => setActiveFilter("")}
-          >
-            View all featured →
-          </button>
+          <a href="#all-events">View all featured →</a>
         </div>
 
         <div className="featured-grid">
           {featuredEvents.map((event) => (
-            <article
-              className="event-card event-card--clickable"
-              key={event.id}
-              role="button"
-              tabIndex="0"
-              onClick={() => goToDetails(event.id)}
-              onKeyDown={(keyEvent) => {
-                if (keyEvent.key === "Enter") goToDetails(event.id);
-              }}
-            >
+            <article className="event-card" key={event._id}>
               <div className="event-card__image-wrap">
-                {getEventImage(event) && (
-                  <img src={getEventImage(event)} alt={event.title} />
-                )}
-
-                <span className="price-pill">{getPriceLabel(event.price)}</span>
-
+                {event.imageUrl && <img src={event.imageUrl} alt={event.title} />}
+                <span className="price-pill">{event.price || "FREE"}</span>
                 <button
                   className="heart-button"
                   type="button"
                   aria-label={`Save ${event.title}`}
-                  onClick={(clickEvent) => clickEvent.stopPropagation()}
                 >
                   <Heart size={24} />
                 </button>
@@ -194,11 +124,7 @@ function BrowseEvents() {
 
                 <p className="event-meta">
                   <Calendar size={16} aria-hidden="true" />
-                  {new Date(event.date).toLocaleDateString('en-US', {
-                    weekday: 'short',
-                    month: 'short',
-                    day: 'numeric',
-                  })} · {event.time}
+                  {new Date(event.date).toLocaleDateString()} · {event.time}
                 </p>
 
                 <p className="event-meta">
@@ -207,59 +133,38 @@ function BrowseEvents() {
                 </p>
 
                 <div className="icon-row" aria-label="Accessibility features">
-                  {(event.accessibilityFeatures || []).slice(0, 5).map((feature) => (
+                  {event.accessibilityFeatures?.slice(0, 5).map((feature) => (
                     <span title={feature} key={feature}>
                       <FeatureIcon feature={feature} />
                     </span>
                   ))}
                 </div>
 
-                <span className="details-link">View details →</span>
+                <Link className="details-link" to={`/events/${event._id}`}>
+                  View details →
+                </Link>
               </div>
             </article>
           ))}
         </div>
       </section>
 
-      {/* All Events: compact list for quick scanning. */}
       <section className="section-block" id="all-events">
         <div className="section-heading">
           <h2>All Events</h2>
-
-          <label className="sort-control">
-            <span>Sort by:</span>
-            <select aria-label="Sort events">
-              <option>Date</option>
-              <option>Category</option>
-              <option>Location</option>
-            </select>
-          </label>
         </div>
 
         <div className="event-list">
-          {listEvents.map((event) => (
-            <article
-              className="event-row event-row--clickable"
-              key={event.id}
-              role="button"
-              tabIndex="0"
-              onClick={() => goToDetails(event.id)}
-              onKeyDown={(keyEvent) => {
-                if (keyEvent.key === "Enter") goToDetails(event.id);
-              }}
-            >
-              {getEventImage(event) && <img src={getEventImage(event)} alt={event.title} />}
+          {allEvents.map((event) => (
+            <article className="event-row" key={event._id}>
+              {event.imageUrl && <img src={event.imageUrl} alt={event.title} />}
 
               <div className="event-row__details">
                 <h3>{event.title}</h3>
 
                 <p>
                   <Calendar size={15} aria-hidden="true" />
-                  {new Date(event.date).toLocaleDateString('en-US', {
-                    weekday: 'short',
-                    month: 'short',
-                    day: 'numeric',
-                  })} · {event.time}
+                  {new Date(event.date).toLocaleDateString()} · {event.time}
                 </p>
 
                 <p>
@@ -269,23 +174,29 @@ function BrowseEvents() {
               </div>
 
               <div className="icon-row event-row__icons">
-                {(event.accessibilityFeatures || []).slice(0, 5).map((feature) => (
+                {event.accessibilityFeatures?.slice(0, 5).map((feature) => (
                   <span title={feature} key={feature}>
                     <FeatureIcon feature={feature} />
                   </span>
                 ))}
               </div>
 
-              <span className="row-price">{getPriceLabel(event.price)}</span>
-              <span className="row-link">View details →</span>
+              <span className="row-price">{event.price || "FREE"}</span>
+
+              <Link className="row-link" to={`/events/${event._id}`}>
+                View details →
+              </Link>
             </article>
           ))}
         </div>
-
-        <button className="view-more" type="button">
-          View more events
-        </button>
       </section>
+
+      <nav className="bottom-nav" aria-label="Mobile bottom navigation">
+        <Link to="/">Browse</Link>
+        <Link to="/my-events">My Events</Link>
+        <Link to="/create">Create</Link>
+        <Link to="/sign-in">Profile</Link>
+      </nav>
     </main>
   );
 }

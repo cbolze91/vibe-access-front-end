@@ -1,10 +1,9 @@
-// src/components/ProtectedRoute.jsx
+import { useContext } from "react";
 import { Navigate } from "react-router";
-import { useUser } from "../context/useUser";
+import { UserContext } from "../context/UserContext";
 
-// Simple gatekeeper: if there is no signed-in user, send them to Sign In.
 function ProtectedRoute({ children }) {
-  const { user } = useUser();
+  const { user } = useContext(UserContext);
 
   if (!user) {
     return <Navigate to="/sign-in" replace />;
