@@ -1,21 +1,19 @@
-// src/components/SignUpForm/SignUpForm.jsx
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import * as authService from "../../services/authService";
-import { useUser } from "../../context/useUser";
+import { UserContext } from "../../context/UserContext";
 
 function SignUpForm() {
   const navigate = useNavigate();
-  const { login } = useUser();
 
-  // Keeps track of what the user types.
+  const { login } = useContext(UserContext);
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",
     confirmPassword: "",
   });
 
-  // Shows a helpful message if sign up fails.
   const [errorMessage, setErrorMessage] = useState("");
 
   function handleChange(event) {
@@ -27,6 +25,7 @@ function SignUpForm() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+
     setErrorMessage("");
 
     if (formData.password !== formData.confirmPassword) {
@@ -35,18 +34,19 @@ function SignUpForm() {
     }
 
     try {
-      const data = await authService.signUp(formData);
+      const data = await authService.signUp({
+        username: formData.username,
+        password: formData.password,
+      });
 
-      // Saves the token and updates the navbar user right away.
       if (data?.token) {
         login(data.token);
         navigate("/");
       } else {
-        setErrorMessage("Sign up failed. Please try again.");
+        setErrorMessage("Sign up failed.");
       }
     } catch (error) {
-      console.error("Sign up error:", error);
-      setErrorMessage("Sign up failed. Please check that the backend is running.");
+      setErrorMessage(error.message);
     }
   }
 
@@ -55,9 +55,12 @@ function SignUpForm() {
       <form className="auth-card" onSubmit={handleSubmit}>
         <h1>Sign Up</h1>
 
-        {errorMessage && <p className="auth-message">{errorMessage}</p>}
+        {errorMessage && (
+          <p className="auth-message">{errorMessage}</p>
+        )}
 
         <label htmlFor="username">Username</label>
+
         <input
           id="username"
           name="username"
@@ -68,6 +71,7 @@ function SignUpForm() {
         />
 
         <label htmlFor="password">Password</label>
+
         <input
           id="password"
           name="password"
@@ -77,7 +81,10 @@ function SignUpForm() {
           required
         />
 
-        <label htmlFor="confirmPassword">Confirm Password</label>
+        <label htmlFor="confirmPassword">
+          Confirm Password
+        </label>
+
         <input
           id="confirmPassword"
           name="confirmPassword"
@@ -87,7 +94,9 @@ function SignUpForm() {
           required
         />
 
-        <button type="submit">Sign Up</button>
+        <button type="submit">
+          Sign Up
+        </button>
       </form>
     </main>
   );

@@ -9,7 +9,9 @@ const EventForm = ({ existingEvent = null }) => {
 
   const [formData, setFormData] = useState({
     title: existingEvent?.title || '',
-    date: existingEvent?.date ? existingEvent.date.slice(0, 10) : '',
+    date: existingEvent?.date
+  ? new Date(existingEvent.date).toISOString().slice(0, 10)
+  : '',
     time: existingEvent?.time || '',
     location: existingEvent?.location || '',
     category: existingEvent?.category || '',

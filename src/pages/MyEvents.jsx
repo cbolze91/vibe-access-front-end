@@ -1,13 +1,34 @@
-// src/pages/MyEvents.jsx
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router";
 import { Calendar, MapPin, Trash2, ArrowRight } from "lucide-react";
-import { useUser } from "../context/useUser";
-import { getUserRsvps, cancelRsvp } from "../services/rsvpService";
+
+import { UserContext } from "../context/UserContext";
+import * as rsvpService from "../services/rsvpService";
 
 function MyEvents() {
-  const { user } = useUser();
+  const { user } = useContext(UserContext);
 
-  // Only signed-in users can view their RSVP list.
+  const [rsvps, setRsvps] = useState([]);
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    async function fetchRsvps() {
+      if (!user) return;
+
+      try {
+        const rsvpData = await rsvpService.getMyRsvps();
+
+        const validRsvps = rsvpData.filter((rsvp) => rsvp.event);
+
+        setRsvps(validRsvps);
+      } catch (error) {
+        setMessage(error.message);
+      }
+    }
+
+    fetchRsvps();
+  }, [user]);
+
   if (!user) {
     return (
       <main className="my-events-page">
@@ -23,20 +44,26 @@ function MyEvents() {
     );
   }
 
-  const rsvps = getUserRsvps(user.username);
-
-  const handleCancelRsvp = (eventId) => {
-    cancelRsvp(eventId, user.username);
-    window.location.reload();
-  };
+  async function handleCancelRsvp(rsvpId) {
+    try {
+      await rsvpService.cancelRsvp(rsvpId);
+      setRsvps(rsvps.filter((rsvp) => rsvp._id !== rsvpId));
+    } catch (error) {
+      setMessage(error.message);
+    }
+  }
 
   return (
     <main className="my-events-page">
       <section className="my-events-header">
-        <p>My Events</p>
+        <p className="my-events-kicker">My Events</p>
         <h1>Your saved RSVPs</h1>
-        <span>{rsvps.length} event{rsvps.length === 1 ? "" : "s"}</span>
+        <span className="my-events-count">
+          {rsvps.length} event{rsvps.length === 1 ? "" : "s"}
+        </span>
       </section>
+
+      {message && <p className="my-events-message">{message}</p>}
 
       {rsvps.length === 0 ? (
         <section className="my-events-empty">
@@ -51,24 +78,26 @@ function MyEvents() {
         <section className="my-events-list">
           {rsvps.map((rsvp) => {
             const event = rsvp.event;
-            const image = event.image || event.imageUrl || event.img || event.photo || "";
-            const price = String(event.price || "FREE").startsWith("$")
-              ? event.price
-              : event.price === 0 || String(event.price).toLowerCase() === "free"
-              ? "FREE"
-              : `$${event.price}`;
 
             return (
-              <article className="my-event-card" key={rsvp.id}>
-                {image && <img src={image} alt={event.title} />}
+              <article className="my-event-card" key={rsvp._id}>
+                {event.imageUrl && (
+                  <img src={event.imageUrl} alt={event.title} />
+                )}
 
                 <div className="my-event-card-content">
-                  <span className="my-event-price">{price}</span>
+                  <span className="my-event-price">
+                    {event.price || "FREE"}
+                  </span>
+
                   <h2>{event.title}</h2>
 
                   <p>
                     <Calendar size={16} />
-                    {event.date} · {event.time}
+                    {event.date
+                      ? new Date(event.date).toLocaleDateString()
+                      : "Date unavailable"}{" "}
+                    · {event.time}
                   </p>
 
                   <p>
@@ -77,12 +106,18 @@ function MyEvents() {
                   </p>
 
                   <div className="my-event-actions">
-                    <Link to={`/events/${event.id}`}>
+                    <Link
+                      to={`/events/${event._id}`}
+                      className="my-event-details-link"
+                    >
                       View details
                       <ArrowRight size={16} />
                     </Link>
 
-                    <button onClick={() => handleCancelRsvp(event.id)}>
+                    <button
+                      type="button"
+                      onClick={() => handleCancelRsvp(rsvp._id)}
+                    >
                       <Trash2 size={16} />
                       Cancel RSVP
                     </button>
